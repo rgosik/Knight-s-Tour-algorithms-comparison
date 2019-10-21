@@ -1,40 +1,35 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Chessboard {
 
     private final int board[][];
-    private List viableMoves;
-    private int posX = 0;
-    private int posY = 0;
+    private int kX = 0;
+    private int kY = 0;
 
-    public Chessboard(int sizeX, int sizeY, int posX, int posY) {
+    public Chessboard(int sizeX, int sizeY, int kX, int kY) {
         this(sizeX, sizeY);
-        this.posX = posX;
-        this.posY = posY;
+        this.kX = kX;
+        this.kY = kY;
     }
 
     public Chessboard(int sizeX, int sizeY) {
         board = new int[sizeY][sizeX];
-        board[posY][posX] = 1;
-        viableMoves = new ArrayList();
+        board[kY][kX] = 1;
     }
 
-    public void move(int x, int y, int iteration) {
-        posX += x;
-        posY += y;
-        board[posY][posX] = iteration;
+    public void moveKnight(Moves move, int iteration) {
+        kX += move.getX();
+        kY += move.getY();
+        board[kY][kX] = iteration + 1;
     }
 
     public int[][] getBoard() {
         return board;
     }
 
-    public int getPosX() {
-        return posX;
+    public int getkX() {
+        return kX;
     }
 
-    public int getPosY() {
-        return posY;
+    public int getkY() {
+        return kY;
     }
 }
