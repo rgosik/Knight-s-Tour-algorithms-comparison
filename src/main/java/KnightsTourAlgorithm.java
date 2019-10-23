@@ -3,37 +3,70 @@ import java.util.List;
 
 public abstract class KnightsTourAlgorithm {
 
-    public List<Moves> generateViableMoves(Chessboard chessboard){
+    private Chessboard chessboard;
+
+    public KnightsTourAlgorithm(Chessboard chessboard){
+        this.chessboard = chessboard;
+    }
+
+    public List<Moves> generateViableMoves(Chessboard chessboard) {
         List<Moves> viableMoves = new ArrayList<>();
 
-        for (Moves move : Moves.values()){
-            if (validateMove(move, chessboard)){
+        for (Moves move : Moves.values()) {
+            if (validateMove(move, chessboard)) {
                 viableMoves.add(move);
             }
         }
         return viableMoves;
     }
 
-    private boolean validateMove(Moves m, Chessboard chessboard){
-        int newX = chessboard.getkX() + m.getX();
-        int newY = chessboard.getkY() + m.getY() ;
+    public List<Moves> generateViableMoves(int[][] board, int knightX, int knightY) {
+        List<Moves> viableMoves = new ArrayList<>();
+
+        for (Moves move : Moves.values()) {
+            if (validateMove(move, board, knightX, knightY)) {
+                viableMoves.add(move);
+            }
+        }
+        return viableMoves;
+    }
+
+    private boolean validateMove(Moves m, Chessboard chessboard) {
+        int newX = chessboard.getKnightX() + m.getX();
+        int newY = chessboard.getKnightY() + m.getY();
 
         return (newX >= 0 && newX < chessboard.getxSize() && (newY >= 0 && newY < chessboard.getySize()) && chessboard.getBoard()[newX][newY] == 0);
     }
 
-    public boolean isFinished(int iteration, Chessboard chessboard){
-        return iteration == chessboard.getxSize() * chessboard.getySize() ;
+    private boolean validateMove(Moves m, int[][] board, int knightX, int knightY) {
+        int newX = knightX + m.getX();
+        int newY = knightY + m.getY();
+
+        return (newX >= 0 && newX < board[0].length && (newY >= 0 && newY < board.length) && board[newX][newY] == 0);
     }
 
-    public void printSolution(Chessboard chessboard){
+    public boolean isFinished(int iteration, Chessboard chessboard) {
+        return iteration == chessboard.getxSize() * chessboard.getySize();
+    }
+
+    public boolean isFinished(int iteration, int[][] board) {
+        return iteration == board.length * board[0].length;
+    }
+
+
+    public void printSolution(Chessboard chessboard) {
 
         int board[][] = chessboard.getBoard();
 
-        for(int x = 0; x < board.length; x++){
-            for(int y = 0; y < board[0].length; y++){
-                System.out.print(board[x][y] + "  ");
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[0].length; y++) {
+                System.out.printf("%4d", board[x][y]);
             }
             System.out.println();
         }
+    }
+
+    public Chessboard getChessboard() {
+        return chessboard;
     }
 }

@@ -2,11 +2,14 @@ import java.util.List;
 
 public class Backtracking extends KnightsTourAlgorithm {
 
-    public boolean solveKT() {
-        Chessboard chessboard = new Chessboard(8, 8);
+    public Backtracking(Chessboard chessboard){
+        super(chessboard);
+    }
 
-        if (solveKTRecursion(chessboard, 1)) {
-            printSolution(chessboard);
+    public boolean solveKT() {
+
+        if (solveKTRecursion(getChessboard().getBoard(), 1, getChessboard().getKnightX(), getChessboard().getKnightY())) {
+            printSolution(getChessboard());
         } else {
             System.out.println("Solution for the given problem does not exist");
         }
@@ -14,24 +17,25 @@ public class Backtracking extends KnightsTourAlgorithm {
         return true;
     }
 
-    public boolean solveKTRecursion(Chessboard chessboard, int iteration) {
+    public boolean solveKTRecursion(int[][] board, int iteration, int knightX, int knightY) {
 
-        if (isFinished(iteration, chessboard)) {
+        //System.out.println(iteration + 1);
+        if (isFinished(iteration, board)) {
             return true;
         }
 
-        List<Moves> viableMoves = generateViableMoves(chessboard);
+        List<Moves> viableMoves = generateViableMoves(board, knightX, knightY);
 
-        for (Moves m : viableMoves) {
-            int nextX = chessboard.getkX() + m.getX();
-            int nextY = chessboard.getkY() + m.getY();
+        for (Moves move : viableMoves) {
+            int nextX = knightX + move.getX();
+            int nextY = knightY + move.getY();
 
-            chessboard.move(m, iteration + 1);
+            board[nextX][nextY] = iteration +1;
 
-            if (solveKTRecursion(chessboard, iteration + 1)) {
+            if (solveKTRecursion(board, iteration + 1, nextX, nextY)) {
                 return true;
             } else {
-                chessboard.resetValue(nextX, nextY);
+                board[nextX][nextY] = 0;
             }
 
         }
