@@ -5,11 +5,11 @@ public abstract class KnightsTourAlgorithm {
 
     private Chessboard chessboard;
 
-    public KnightsTourAlgorithm(Chessboard chessboard){
+    public KnightsTourAlgorithm(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
 
-    public List<Moves> generateViableMoves(Chessboard chessboard) {
+    public List<Moves> generateLegalMoves(Chessboard chessboard) {
         List<Moves> viableMoves = new ArrayList<>();
 
         for (Moves move : Moves.values()) {
@@ -20,7 +20,7 @@ public abstract class KnightsTourAlgorithm {
         return viableMoves;
     }
 
-    public List<Moves> generateViableMoves(int[][] board, int knightX, int knightY) {
+    public List<Moves> generateLegalMoves(int[][] board, int knightX, int knightY) {
         List<Moves> viableMoves = new ArrayList<>();
 
         for (Moves move : Moves.values()) {
@@ -42,7 +42,11 @@ public abstract class KnightsTourAlgorithm {
         int newX = knightX + m.getX();
         int newY = knightY + m.getY();
 
-        return (newX >= 0 && newX < board[0].length && (newY >= 0 && newY < board.length) && board[newX][newY] == 0);
+        if ((newX >= 0 && newX < board.length) && (newY >= 0 && newY < board[0].length)) {
+            return board[newX][newY] == 0;
+        }
+
+        return false;
     }
 
     public boolean isFinished(int iteration, Chessboard chessboard) {
@@ -56,14 +60,15 @@ public abstract class KnightsTourAlgorithm {
 
     public void printSolution(Chessboard chessboard) {
 
-        int board[][] = chessboard.getBoard();
+        int[][] board = chessboard.getBoard();
 
-        for (int x = 0; x < board.length; x++) {
-            for (int y = 0; y < board[0].length; y++) {
-                System.out.printf("%4d", board[x][y]);
+        for (int[] x : board) {
+            for (int y : x) {
+                System.out.printf("%4d", y);
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public Chessboard getChessboard() {

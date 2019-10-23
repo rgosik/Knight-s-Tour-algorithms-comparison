@@ -17,14 +17,14 @@ public class Backtracking extends KnightsTourAlgorithm {
         return true;
     }
 
-    public boolean solveKTRecursion(int[][] board, int iteration, int knightX, int knightY) {
+    private boolean solveKTRecursion(int[][] board, int iteration, int knightX, int knightY) {
 
         //System.out.println(iteration + 1);
         if (isFinished(iteration, board)) {
             return true;
         }
 
-        List<Moves> viableMoves = generateViableMoves(board, knightX, knightY);
+        List<Moves> viableMoves = generateLegalMoves(board, knightX, knightY);
 
         for (Moves move : viableMoves) {
             int nextX = knightX + move.getX();

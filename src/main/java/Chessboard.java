@@ -1,4 +1,4 @@
-public class Chessboard{
+public class Chessboard {
 
     private int board[][];
     private int knightX = 0;
@@ -19,7 +19,8 @@ public class Chessboard{
         xSize = board[0].length;
     }
 
-    private Chessboard(){}
+    private Chessboard() {
+    }
 
     public void move(Moves move, int iteration) {
         knightX += move.getX();
@@ -27,13 +28,18 @@ public class Chessboard{
         board[knightY][knightX] = iteration;
     }
 
-    public static Chessboard copy(Chessboard chessboard){
+    public static Chessboard copy(Chessboard chessboard) {
         Chessboard copy = new Chessboard();
         copy.ySize = chessboard.ySize;
         copy.xSize = chessboard.xSize;
-        copy.board = chessboard.board.clone();
         copy.knightX = chessboard.knightX;
         copy.knightY = chessboard.knightY;
+        copy.board = new int[chessboard.ySize][chessboard.xSize];
+
+        for (int i = 0; i < chessboard.board.length; i++) {
+            System.arraycopy(chessboard.board[i], 0, copy.board[i], 0, chessboard.xSize);
+        }
+
         return copy;
     }
 
