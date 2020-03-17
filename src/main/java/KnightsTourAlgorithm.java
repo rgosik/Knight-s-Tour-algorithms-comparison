@@ -1,3 +1,6 @@
+import model.Chessboard;
+import model.Moves;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +38,7 @@ public abstract class KnightsTourAlgorithm {
         int newX = chessboard.getKnightX() + m.getX();
         int newY = chessboard.getKnightY() + m.getY();
 
-        return (newX >= 0 && newX < chessboard.getxSize() && (newY >= 0 && newY < chessboard.getySize()) && chessboard.getBoard()[newX][newY] == 0);
+        return (newX >= 0 && newX < chessboard.getXSize() && (newY >= 0 && newY < chessboard.getYSize()) && chessboard.getBoard()[newX][newY] == 0);
     }
 
     private boolean validateMove(Moves m, int[][] board, int knightX, int knightY) {
@@ -50,7 +53,7 @@ public abstract class KnightsTourAlgorithm {
     }
 
     public boolean isFinished(int iteration, Chessboard chessboard) {
-        return iteration == chessboard.getxSize() * chessboard.getySize();
+        return iteration == chessboard.getXSize() * chessboard.getYSize();
     }
 
     public boolean isFinished(int iteration, int[][] board) {

@@ -1,8 +1,11 @@
+import model.Chessboard;
+import model.Moves;
+
 import java.util.List;
 
 public class Backtracking extends KnightsTourAlgorithm {
 
-    public Backtracking(Chessboard chessboard){
+    public Backtracking(Chessboard chessboard) {
         super(chessboard);
     }
 
@@ -19,7 +22,6 @@ public class Backtracking extends KnightsTourAlgorithm {
 
     private boolean solveKTRecursion(int[][] board, int iteration, int knightX, int knightY) {
 
-        //System.out.println(iteration + 1);
         if (isFinished(iteration, board)) {
             return true;
         }
@@ -30,7 +32,7 @@ public class Backtracking extends KnightsTourAlgorithm {
             int nextX = knightX + move.getX();
             int nextY = knightY + move.getY();
 
-            board[nextX][nextY] = iteration +1;
+            board[nextX][nextY] = iteration + 1;
 
             if (solveKTRecursion(board, iteration + 1, nextX, nextY)) {
                 return true;

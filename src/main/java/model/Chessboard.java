@@ -1,10 +1,17 @@
+package model;
+
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.Getter;
+
+@NoArgsConstructor
 public class Chessboard {
 
-    private int board[][];
-    private int knightX = 0;
-    private int knightY = 0;
-    private int xSize;
-    private int ySize;
+    @Getter @Setter private int[][] board;
+    @Getter @Setter private int knightX = 0;
+    @Getter @Setter private int knightY = 0;
+    @Getter @Setter private int xSize;
+    @Getter @Setter private int ySize;
 
     public Chessboard(int sizeX, int sizeY, int knightX, int knightY) {
         this(sizeX, sizeY);
@@ -17,9 +24,6 @@ public class Chessboard {
         board[knightY][knightX] = 1;
         ySize = board.length;
         xSize = board[0].length;
-    }
-
-    private Chessboard() {
     }
 
     public void move(Moves move, int iteration) {
@@ -41,25 +45,5 @@ public class Chessboard {
         }
 
         return copy;
-    }
-
-    public int[][] getBoard() {
-        return board;
-    }
-
-    public int getKnightX() {
-        return knightX;
-    }
-
-    public int getKnightY() {
-        return knightY;
-    }
-
-    public int getxSize() {
-        return xSize;
-    }
-
-    public int getySize() {
-        return ySize;
     }
 }
