@@ -1,4 +1,4 @@
-package model;
+package com.knightstour.model;
 
 import lombok.NoArgsConstructor;
 import lombok.Setter;

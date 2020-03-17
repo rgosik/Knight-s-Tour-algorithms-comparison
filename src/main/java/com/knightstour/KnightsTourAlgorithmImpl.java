@@ -1,5 +1,9 @@
-import model.Chessboard;
-import model.Moves;
+package com.knightstour;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.knightstour.model.Chessboard;
+import com.knightstour.model.Moves;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -8,10 +12,12 @@ import java.util.Set;
 
 public abstract class KnightsTourAlgorithmImpl {
 
+    Logger log;
     private Chessboard chessboard;
 
-    public KnightsTourAlgorithmImpl(Chessboard chessboard) {
+    public KnightsTourAlgorithmImpl(Chessboard chessboard, String className) {
         this.chessboard = chessboard;
+        log = LoggerFactory.getLogger(className);
     }
 
     public Set<Moves> generateLegalMoves(Chessboard chessboard) {
