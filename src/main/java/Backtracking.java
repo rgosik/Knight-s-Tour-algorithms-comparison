@@ -3,7 +3,7 @@ import model.Moves;
 
 import java.util.List;
 
-public class Backtracking extends KnightsTourAlgorithm {
+public class Backtracking extends KnightsTourAlgorithmImpl {
 
     public Backtracking(Chessboard chessboard) {
         super(chessboard);

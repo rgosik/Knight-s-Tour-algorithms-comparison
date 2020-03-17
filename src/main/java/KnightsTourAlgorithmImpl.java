@@ -2,18 +2,20 @@ import model.Chessboard;
 import model.Moves;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public abstract class KnightsTourAlgorithm {
+public abstract class KnightsTourAlgorithmImpl {
 
     private Chessboard chessboard;
 
-    public KnightsTourAlgorithm(Chessboard chessboard) {
+    public KnightsTourAlgorithmImpl(Chessboard chessboard) {
         this.chessboard = chessboard;
     }
 
-    public List<Moves> generateLegalMoves(Chessboard chessboard) {
-        List<Moves> viableMoves = new ArrayList<>();
+    public Set<Moves> generateLegalMoves(Chessboard chessboard) {
+        Set<Moves> viableMoves = new HashSet<>();
 
         for (Moves move : Moves.values()) {
             if (validateMove(move, chessboard)) {

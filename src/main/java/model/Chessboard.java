@@ -32,16 +32,16 @@ public class Chessboard {
         board[knightY][knightX] = iteration;
     }
 
-    public static Chessboard copy(Chessboard chessboard) {
+    public Chessboard copy() {
         Chessboard copy = new Chessboard();
-        copy.ySize = chessboard.ySize;
-        copy.xSize = chessboard.xSize;
-        copy.knightX = chessboard.knightX;
-        copy.knightY = chessboard.knightY;
-        copy.board = new int[chessboard.ySize][chessboard.xSize];
+        copy.ySize = ySize;
+        copy.xSize = xSize;
+        copy.knightX = knightX;
+        copy.knightY = knightY;
+        copy.board = new int[ySize][xSize];
 
-        for (int i = 0; i < chessboard.board.length; i++) {
-            System.arraycopy(chessboard.board[i], 0, copy.board[i], 0, chessboard.xSize);
+        for (int i = 0; i < board.length; i++) {
+            System.arraycopy(board[i], 0, copy.board[i], 0, xSize);
         }
 
         return copy;
