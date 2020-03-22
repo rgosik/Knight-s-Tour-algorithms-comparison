@@ -1,18 +1,20 @@
 package com.knightstour.model;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.Getter;
 
+@Data
 @NoArgsConstructor
 public class Chessboard {
 
-    @Getter @Setter private int[][] board;
-    @Getter @Setter private int knightX = 0;
-    @Getter @Setter private int knightY = 0;
-    @Getter @Setter private int xSize;
-    @Getter @Setter private int ySize;
+    private int[][] board;
+    private int knightX = 0;
+    private int knightY = 0;
+    private int xSize;
+    private int ySize;
 
+    @Builder
     public Chessboard(int sizeX, int sizeY, int knightX, int knightY) {
         this(sizeX, sizeY);
         this.knightX = knightX;
