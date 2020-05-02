@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+
+namespace knightsTour.Model
+{
+    [Serializable]
+    public class Chessboard
+    {
+        public int[,] Board { get; private set; }
+        public int KnightX { get; private set; } = 0;
+        public int KnightY { get; private set; } = 0;
+        public int XSize { get; private set; }
+        public int YSize { get; private set; }
+
+        public Chessboard()
+        {
+        }
+
+        public Chessboard(int xSize, int ySize)
+        {
+            Board = new int[ySize, xSize];
+            Board[KnightY, KnightX] = 1;
+            YSize = ySize;
+            XSize = xSize;
+        }
+
+        public Chessboard(int xSize, int ySize, int knightX, int knightY)
+        {
+            Board = new int[ySize, xSize];
+            Board[KnightY, KnightX] = 1;
+            YSize = ySize;
+            XSize = xSize;
+            KnightX = KnightX;
+            KnightY = KnightY;
+        }
+
+        public void MoveKnight(Move move, int iteration)
+        {
+            KnightX += move.X;
+            KnightY += move.Y;
+            Board[KnightY, KnightX] = iteration;
+        }
+
+        public Chessboard DeepCopy()
+        {
+            using (var ms = new MemoryStream())
+            {
+                var formatter = new BinaryFormatter();
+                formatter.Serialize(ms, this);
+                ms.Position = 0;
+
+                return (Chessboard)formatter.Deserialize(ms);
+            }
+        }
+    }
+}

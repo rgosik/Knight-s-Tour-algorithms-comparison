@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace knightsTour.Model
+{
+    public struct Move
+    {
+        public static readonly Move One = new Move(1, -2);
+        public static readonly Move Two = new Move(2, -1);
+        public static readonly Move Three = new Move(2, 1);
+        public static readonly Move Four = new Move(1, 2);
+        public static readonly Move Five = new Move(-1, 2);
+        public static readonly Move Six = new Move(-2, 1);
+        public static readonly Move Seven = new Move(-2, -1);
+        public static readonly Move Eight = new Move(-1, -2);
+
+
+        public short X { get; private set; }
+
+        public short Y { get; private set; }
+
+        public bool IsDefault => X == default(short) && Y == default(short);
+
+        private Move(short x, short y)
+        {
+            X = x;
+            Y = y;
+        }
+    }
+}

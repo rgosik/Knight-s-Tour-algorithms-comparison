@@ -1,4 +1,5 @@
-﻿using System;
+﻿using knightsTour.Model;
+using System;
 
 namespace knightsTour
 {
@@ -6,7 +7,10 @@ namespace knightsTour
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Chessboard backTrackingChessboard = new Chessboard(8, 8);
+
+            Backtracking backtracking = new Backtracking(backTrackingChessboard.DeepCopy());
+            backtracking.solveKT();
         }
     }
 }
