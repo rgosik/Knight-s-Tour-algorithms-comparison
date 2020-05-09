@@ -16,7 +16,7 @@ namespace knightsTour
 
             if (solveKTRecursion(Chessboard.Board, 1, Chessboard.KnightX, Chessboard.KnightY))
             {
-                printSolution(Chessboard);
+                printSolution(Chessboard, null);
             }
             else
             {
@@ -28,20 +28,20 @@ namespace knightsTour
 
         private bool solveKTRecursion(int[,] board, int iteration, int knightX, int knightY)
         {
-
+            //printSolution(null, board);
             if (isFinished(iteration, board))
             {
                 return true;
             }
 
-            HashSet<Move> viableMoves = MovesService.GenerateLegalMoves(board, knightX, knightY);
+            HashSet<Move> viableMoves = MovesService.GenerateLegalMoves(null, board, knightX, knightY);
 
             foreach (Move move in viableMoves)
             {
                 int nextX = knightX + move.X;
                 int nextY = knightY + move.Y;
 
-                board[nextX, nextY] = iteration + 1;
+                board[nextY, nextX] = iteration + 1;
 
                 if (solveKTRecursion(board, iteration + 1, nextX, nextY))
                 {
@@ -49,7 +49,7 @@ namespace knightsTour
                 }
                 else
                 {
-                    board[nextX, nextY] = 0;
+                    board[nextY, nextX] = 0;
                 }
 
             }

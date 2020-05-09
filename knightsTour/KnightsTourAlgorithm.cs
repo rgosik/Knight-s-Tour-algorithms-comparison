@@ -27,10 +27,12 @@ namespace knightsTour
         }
 
 
-        public void printSolution(Chessboard chessboard)
+        public void printSolution(Chessboard chessboard, int[,] board)
         {
-
-            int[, ] board = chessboard.Board;
+            if (board == null || board.Length == 0)
+            {
+                board = chessboard.Board;
+            }
 
             for (int i = 0; i < board.GetLength(0); i++)
             {

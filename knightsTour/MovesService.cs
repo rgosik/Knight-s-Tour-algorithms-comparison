@@ -6,7 +6,7 @@ namespace knightsTour.Model
 {
     public class MovesService
     {
-        public List<Move> moves = new List<Move>()
+        public readonly IList<Move> moves = new List<Move>()
         {
             new Move(1,-2),
             new Move(2,-1),
@@ -18,14 +18,13 @@ namespace knightsTour.Model
             new Move(-1,-2),
         };
 
-
-        public HashSet<Move> GenerateLegalMoves(Chessboard chessboard)
+        public HashSet<Move> GenerateLegalMoves(Chessboard chessboard, int[,] board, int knightX, int knightY)
         {
             HashSet<Move> viableMoves = new HashSet<Move>();
 
             foreach (Move move in moves)
             {
-                if (ValidateMove(move, chessboard))
+                if (MoveIsLegal(chessboard, board, move.X + knightX, move.Y + knightY))
                 {
                     viableMoves.Add(move);
                 }
@@ -33,36 +32,18 @@ namespace knightsTour.Model
             return viableMoves;
         }
 
-        private bool ValidateMove(Move m, Chessboard chessboard)
+        private bool MoveIsLegal(Chessboard chessboard, int[,] board, int newX, int newY)
         {
-            int newX = chessboard.KnightX + m.X;
-            int newY = chessboard.KnightX + m.Y;
-
-            return (newX >= 0 && newX < chessboard.XSize && (newY >= 0 && newY < chessboard.YSize) && chessboard.Board[newX, newY] == 0);
-        }
-
-        public HashSet<Move> GenerateLegalMoves(int[,] board, int knightX, int knightY)
-        {
-            HashSet<Move> viableMoves = new HashSet<Move>();
-
-            foreach (Move move in moves)
+            if (chessboard == null)
             {
-                if (ValidateMove(move, board, knightX, knightY))
+                if ((newX >= 0 && newX < board.GetLength(1)) && (newY >= 0 && newY < board.GetLength(0)))
                 {
-                    viableMoves.Add(move);
+                    return board[newY, newX] == 0;
                 }
             }
-            return viableMoves;
-        }
-
-        private bool ValidateMove(Move m, int[,] board, int knightX, int knightY)
-        {
-            int newX = knightX + m.X;
-            int newY = knightY + m.Y;
-
-            if ((newX >= 0 && newX < board.GetLength(1)) && (newY >= 0 && newY < board.GetLength(0)))
+            else
             {
-                return board[newX, newY] == 0;
+                return (newX >= 0 && newX < chessboard.XSize && (newY >= 0 && newY < chessboard.YSize) && chessboard.Board[newX, newY] == 0);
             }
 
             return false;

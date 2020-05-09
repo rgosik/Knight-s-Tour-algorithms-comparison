@@ -19,6 +19,15 @@ namespace knightsTour.Model
         {
         }
 
+        public Chessboard(int[,] board, int knightX, int knightY)
+        {
+            Board = (int[,])board.Clone();
+            KnightX = knightX;
+            KnightY = knightY;
+            YSize = board.GetLength(0);
+            XSize = board.GetLength(1);
+        }
+
         public Chessboard(int xSize, int ySize)
         {
             Board = new int[ySize, xSize];
