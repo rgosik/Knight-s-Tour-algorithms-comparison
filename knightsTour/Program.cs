@@ -7,9 +7,13 @@ namespace knightsTour
     {
         static void Main(string[] args)
         {
-            Chessboard backTrackingChessboard = new Chessboard(8,8);
+            //3,8
+            //5,5
+            Chessboard backTrackingChessboard = new Chessboard(5,5);
             Backtracking backtracking = new Backtracking(backTrackingChessboard);
-            backtracking.solveKT();
+            backtracking.solveKT("log");
+
+            
         }
     }
 }

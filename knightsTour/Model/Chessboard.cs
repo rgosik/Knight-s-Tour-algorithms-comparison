@@ -10,8 +10,8 @@ namespace knightsTour.Model
     public class Chessboard
     {
         public int[,] Board { get; private set; }
-        public int KnightX { get; private set; } = 0;
-        public int KnightY { get; private set; } = 0;
+        public int KnightX { get; private set; }
+        public int KnightY { get; private set; }
         public int XSize { get; private set; }
         public int YSize { get; private set; }
 
@@ -31,7 +31,6 @@ namespace knightsTour.Model
         public Chessboard(int xSize, int ySize)
         {
             Board = new int[ySize, xSize];
-            Board[KnightY, KnightX] = 1;
             YSize = ySize;
             XSize = xSize;
         }
@@ -39,7 +38,6 @@ namespace knightsTour.Model
         public Chessboard(int xSize, int ySize, int knightX, int knightY)
         {
             Board = new int[ySize, xSize];
-            Board[KnightY, KnightX] = 1;
             YSize = ySize;
             XSize = xSize;
             KnightX = KnightX;

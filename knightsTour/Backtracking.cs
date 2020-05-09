@@ -1,4 +1,5 @@
 ﻿using knightsTour.Model;
+using knightsTour.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,18 +8,35 @@ namespace knightsTour
 {
     public class Backtracking : KnightsTourAlgorithm
     {
-        public Backtracking(Chessboard chessboard) : base(chessboard)
+        public Backtracking(Chessboard chessboard) : base(chessboard, "backtracking.txt")
         {
         }
 
-        public bool solveKT()
+        public bool solveKT(string log = default)
         {
-
-            if (solveKTRecursion(Chessboard.Board, 1, Chessboard.KnightX, Chessboard.KnightY))
+            for (int y = 0; y < Chessboard.Board.GetLength(0); y++) 
             {
-                printSolution(Chessboard, null);
+                for (int x = 0; x < Chessboard.Board.GetLength(1); x++)
+                {
+                    var clonedChessboard = Chessboard.DeepCopy();
+
+                    if (solveKTRecursion(clonedChessboard.Board, 1, x, y, log))
+                    {
+                        if (!FoundOneSolution)
+                        {
+                            FoundOneSolution = true;
+                        }
+                        Console.WriteLine($"Solution for: x:{x+1} and y:{y+1} starting point");
+                        PrintBoard(clonedChessboard, null);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Could not find a solutino with a x:{x+1} and y:{y+1} starting point\n");
+                    }
+                }
             }
-            else
+
+            if(!FoundOneSolution)
             {
                 Console.WriteLine("Solution for the given problem does not exist");
             }
@@ -26,24 +44,29 @@ namespace knightsTour
             return true;
         }
 
-        private bool solveKTRecursion(int[,] board, int iteration, int knightX, int knightY)
+        private bool solveKTRecursion(int[,] board, int iteration, int knightX, int knightY, string log)
         {
-            //printSolution(null, board);
-            if (isFinished(iteration, board))
+            board[knightY, knightX] = iteration;
+
+            if (!string.IsNullOrEmpty(log))
+            {
+                string currentBoard = GetBoard(null, board);
+                Logger.WriteToFileAsync(currentBoard);
+            }
+
+            if (isFinished(iteration, null, board))
             {
                 return true;
             }
+            
+            HashSet<Move> legalMoves = MovesService.GenerateLegalMoves(null, board, knightX, knightY);
 
-            HashSet<Move> viableMoves = MovesService.GenerateLegalMoves(null, board, knightX, knightY);
-
-            foreach (Move move in viableMoves)
+            foreach (Move move in legalMoves)
             {
                 int nextX = knightX + move.X;
-                int nextY = knightY + move.Y;
+                int nextY = knightY + move.Y;      
 
-                board[nextY, nextX] = iteration + 1;
-
-                if (solveKTRecursion(board, iteration + 1, nextX, nextY))
+                if (solveKTRecursion(board, iteration + 1, nextX, nextY, log))
                 {
                     return true;
                 }
