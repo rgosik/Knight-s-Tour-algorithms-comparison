@@ -19,15 +19,6 @@ namespace knightsTour.Model
         {
         }
 
-        public Chessboard(int[,] board, int knightX, int knightY)
-        {
-            Board = (int[,])board.Clone();
-            KnightX = knightX;
-            KnightY = knightY;
-            YSize = board.GetLength(0);
-            XSize = board.GetLength(1);
-        }
-
         public Chessboard(int xSize, int ySize)
         {
             Board = new int[ySize, xSize];
@@ -35,13 +26,16 @@ namespace knightsTour.Model
             XSize = xSize;
         }
 
-        public Chessboard(int xSize, int ySize, int knightX, int knightY)
+        public Chessboard(int xSize, int ySize, int knightX, int knightY) : this(xSize, ySize)
         {
-            Board = new int[ySize, xSize];
-            YSize = ySize;
-            XSize = xSize;
-            KnightX = KnightX;
-            KnightY = KnightY;
+            KnightX = knightX;
+            KnightY = knightY;
+        }
+
+        public Chessboard(int[,] board, int knightX, int knightY) : this(board.GetLength(1), board.GetLength(0))
+        {
+            KnightX = knightX;
+            KnightY = knightY;
         }
 
         public void MoveKnight(Move move, int iteration)

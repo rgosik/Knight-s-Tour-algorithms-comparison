@@ -8,7 +8,7 @@ namespace knightsTour
 {
     public class Backtracking : KnightsTourAlgorithm
     {
-        public Backtracking(Chessboard chessboard) : base(chessboard, "backtracking.txt")
+        public Backtracking(Chessboard chessboard) : base(chessboard, "backtrackingLog.txt")
         {
         }
 
@@ -16,7 +16,7 @@ namespace knightsTour
         {
             for (int y = 0; y < Chessboard.Board.GetLength(0); y++) 
             {
-                for (int x = 0; x < Chessboard.Board.GetLength(1); x++)
+                for (int x = 1; x < Chessboard.Board.GetLength(1); x++)
                 {
                     var clonedChessboard = Chessboard.DeepCopy();
 
@@ -39,6 +39,7 @@ namespace knightsTour
             if(!FoundOneSolution)
             {
                 Console.WriteLine("Solution for the given problem does not exist");
+                return false;
             }
 
             return true;
@@ -79,5 +80,6 @@ namespace knightsTour
 
             return false;
         }
+
     }
 }
