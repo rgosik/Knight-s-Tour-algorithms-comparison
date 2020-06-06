@@ -2,7 +2,6 @@
 using knightsTour.Resources;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace knightsTour.KTAlgorithms
 {
@@ -22,7 +21,7 @@ namespace knightsTour.KTAlgorithms
         int endX;
         int endY;
 
-        public DivideAndConquerParberry(Chessboard chessboard) : base(chessboard, "divideAndConquerLog.txt")
+        public DivideAndConquerParberry(Chessboard chessboard, bool output) : base(chessboard, output)
         {
             int quadrantX = Chessboard.XSize / 2;
             int quadrantY = Chessboard.YSize / 2;
@@ -42,7 +41,7 @@ namespace knightsTour.KTAlgorithms
             DnCPositions = new DivideAndConquerSetsOfPositions(quadrantX - 1, quadrantY - 1);
         }
 
-        public bool SolveKT(string log = default)
+        public bool SolveKT()
         {
             restart:
             foreach (Chessboard chessboard in QuadrantChessboards)
@@ -53,12 +52,12 @@ namespace knightsTour.KTAlgorithms
                 endX = DnCPositions.GetEndPosition().Item1;
                 endY = DnCPositions.GetEndPosition().Item2;
 
-                if (solveKTRecursion(chessboard.Board, 1, startX, startY))
+                if (SolveKTRecursion(chessboard.Board, 1, startX, startY))
                 {
-                    totalSteps += steps;
-                    Console.WriteLine($"Solution for Q{quadrantIndex}\nSteps: {steps}\nStarting point = x:{startX} and y:{startY}\n");
+                    totalSteps += Steps;
+                    Console.WriteLine($"Solution for Q{quadrantIndex}\nSteps: {Steps}\nStarting point = x:{startX} and y:{startY}\n");
                     PrintBoard(chessboard, null);
-                    steps = 0;
+                    Steps = 0;
 
                     if (!DnCPositions.ChangeToPostionsOfNextQuater())
                     {
@@ -68,7 +67,7 @@ namespace knightsTour.KTAlgorithms
                 }
                 else
                 {
-                    Console.WriteLine($"Could not find a solutino for Q{quadrantIndex}\nSteps: {steps}\nStarting point = x:{startX} and y:{startY}\nCHANGING SET OF POSITIONS\n");
+                    Console.WriteLine($"Could not find a solutino for Q{quadrantIndex}\nSteps: {Steps}\nStarting point = x:{startX} and y:{startY}\nCHANGING SET OF POSITIONS\n");
                     if (DnCPositions.ChangeToNextSet())
                     {
                         quadrantIndex = 0;
@@ -85,17 +84,17 @@ namespace knightsTour.KTAlgorithms
             return true;
         }
 
-        private bool solveKTRecursion(int[,] board, int iteration, int knightX, int knightY)
+        private bool SolveKTRecursion(int[,] board, int iteration, int knightX, int knightY)
         {
-            steps++;
+            Steps++;
             board[knightY, knightX] = iteration;
 
-            if (isFinished(iteration, null, board))
+            if (IsFinishedByBoard(iteration, board))
             {
                 return true;
             }
 
-            legalMoves = MovesService.GenerateLegalMoves(null, board, knightX, knightY);
+            legalMoves = MovesService.GenerateLegalMoves(knightX, knightY, board);
             legalMoves = MovesService.WarnsdorfRuleMovesSort(legalMoves, board, knightX, knightY);
 
             foreach (Move move in legalMoves)
@@ -103,12 +102,12 @@ namespace knightsTour.KTAlgorithms
                 int nextX = knightX + move.X;
                 int nextY = knightY + move.Y;
 
-                if (nextX == endX && nextY == endY && !isFinished(iteration + 1, null, board))
+                if (nextX == endX && nextY == endY && !IsFinishedByBoard(iteration + 1, board))
                 {
                     continue;
                 }
 
-                if (solveKTRecursion(board, iteration + 1, nextX, nextY))
+                if (SolveKTRecursion(board, iteration + 1, nextX, nextY))
                 {
                     return true;
                 }

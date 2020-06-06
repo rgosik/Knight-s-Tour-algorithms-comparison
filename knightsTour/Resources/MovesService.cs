@@ -19,7 +19,7 @@ namespace knightsTour.Model
             new Move(-1,-2),
         };
 
-        public IList<Move> GenerateLegalMoves(Chessboard chessboard, int[,] board = default, int knightX = default, int knightY = default)
+        public IList<Move> GenerateLegalMoves(int knightX, int knightY, int[,] board = default, Chessboard chessboard = default)
         {
             IList<Move> viableMoves = new List<Move>();
 
@@ -57,9 +57,10 @@ namespace knightsTour.Model
 
             foreach (Move move in legalMoves)
             {
-                int legalMovesCount = GenerateLegalMoves(null, board, knightX + move.X, knightY + move.Y).Count;
+                int legalMovesCount = GenerateLegalMoves(knightX + move.X, knightY + move.Y, board).Count;
                 toSort.Add(new Tuple<int, Move>(legalMovesCount, move));
             }
+
             toSort = toSort.OrderBy(i => i.Item1).ToList();
 
             foreach (Tuple<int, Move> el in toSort)

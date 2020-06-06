@@ -1,17 +1,15 @@
 ﻿using knightsTour.Model;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace knightsTour.KTAlgorithms
 {
     public class SquirrelWarnsdorff : KnightsTourAlgorithm
     {
-        public SquirrelWarnsdorff(Chessboard chessboard) : base(chessboard, "squirrelWarnsdorff.txt")
+        public SquirrelWarnsdorff(Chessboard chessboard, bool output) : base(chessboard, output)
         {
         }
 
-        //public bool solveKT(string log = default)
+        //public bool SolveKT(string log = default)
         //{
 
         //}

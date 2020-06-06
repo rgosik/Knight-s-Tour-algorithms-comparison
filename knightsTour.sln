@@ -5,10 +5,7 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "knightsTour", "knightsTour\knightsTour.csproj", "{286CDD71-F674-4F61-8FBB-9F9D71E6203D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA385688-D822-49DD-B579-B96C263A6D7E}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{AD96CFCC-661F-4F18-B46F-4B08E223FFF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +17,10 @@ Global
 		{286CDD71-F674-4F61-8FBB-9F9D71E6203D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{286CDD71-F674-4F61-8FBB-9F9D71E6203D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{286CDD71-F674-4F61-8FBB-9F9D71E6203D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD96CFCC-661F-4F18-B46F-4B08E223FFF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD96CFCC-661F-4F18-B46F-4B08E223FFF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD96CFCC-661F-4F18-B46F-4B08E223FFF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD96CFCC-661F-4F18-B46F-4B08E223FFF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

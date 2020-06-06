@@ -2,40 +2,38 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
-using knightsTour.Resources;
 
 namespace knightsTour
 {
     public abstract class KnightsTourAlgorithm
     {
-        public int steps;
-        public bool FoundOneSolution { get; set; }
-        public MovesService MovesService { get; }
-        public IList<Move> legalMoves { get; set; }
-        public Chessboard Chessboard { get; }
-        public Logger Logger { get; }
+        public bool Output { get; protected set; }
+        public int Steps { get; protected set; }
+        public bool FoundOneSolution { get; protected set; }
+        public bool FoundSolution { get; protected set; }
+        public MovesService MovesService { get; protected set; }
+        public IList<Move> legalMoves { get; protected set; }
+        public Chessboard Chessboard { get; protected set; }
 
-        public KnightsTourAlgorithm(Chessboard chessboard, string fileName)
+        public KnightsTourAlgorithm(Chessboard chessboard, bool output)
         {
-            steps = 0;
+            Output = output;
+            Steps = 0;
             Chessboard = chessboard;
             MovesService = new MovesService();
             legalMoves = new List<Move>();
-            Logger = new Logger(fileName);
         }
 
-        public bool isFinished(int iteration, Chessboard chessboard, int[,] board = default)
+        public bool IsFinishedByBoard(int iteration, int[,] board)
         {
-            if (board == null || board.Length == 0)
-            {
-                return iteration == chessboard.XSize * chessboard.YSize;
-            }
-            else
-            {
-                return iteration == board.GetLength(1) * board.GetLength(0);
-            }
+            return iteration == board.GetLength(1) * board.GetLength(0);
         }
+
+        public bool IsFinishedByChessBoard(int iteration, Chessboard chessboard)
+        {
+            return iteration == chessboard.XSize * chessboard.YSize;
+        }
+
 
         public void PrintBoard(Chessboard chessboard, int[,] board = default)
         {
@@ -48,7 +46,7 @@ namespace knightsTour
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    Console.Write($"{board[i, j],4}");
+                    Console.Write($"{board[i, j], 4}");
                 }
                 Console.WriteLine();
             }
