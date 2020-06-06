@@ -14,9 +14,10 @@ namespace knightsTour.Resources
             stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Write, 4096, useAsync: true); ;
         }
 
-        public async void WriteToFileAsync(string content)
+        public async void WriteToFileAsync(string content, int x, int y)
         {
             var bytes = Encoding.UTF8.GetBytes(content);
+            await stream.WriteAsync(Encoding.UTF8.GetBytes($"Solution for: x:{x} and y:{y} starting point\n"));
             await stream.WriteAsync(bytes, 0, bytes.Length);
         }
     }

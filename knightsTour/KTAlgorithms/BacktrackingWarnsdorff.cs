@@ -7,10 +7,10 @@ using System.Text;
 
 namespace knightsTour
 {
-    public class Backtracking : KnightsTourAlgorithm
+    public class BacktrackingWarnsdorff : KnightsTourAlgorithm
     {
 
-        public Backtracking(Chessboard chessboard) : base(chessboard, "backtrackingLog.txt")
+        public BacktrackingWarnsdorff(Chessboard chessboard) : base(chessboard, "backtrackingLog.txt")
         {
         }
 

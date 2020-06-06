@@ -9,15 +9,19 @@ namespace knightsTour
 {
     public abstract class KnightsTourAlgorithm
     {
+        public int steps;
         public bool FoundOneSolution { get; set; }
-        public MovesService MovesService { get; private set; }
-        public Chessboard Chessboard { get; private set; }
-        public Logger Logger { get; private set; }
+        public MovesService MovesService { get; }
+        public IList<Move> legalMoves { get; set; }
+        public Chessboard Chessboard { get; }
+        public Logger Logger { get; }
 
         public KnightsTourAlgorithm(Chessboard chessboard, string fileName)
         {
+            steps = 0;
             Chessboard = chessboard;
             MovesService = new MovesService();
+            legalMoves = new List<Move>();
             Logger = new Logger(fileName);
         }
 

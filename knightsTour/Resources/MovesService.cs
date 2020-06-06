@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace knightsTour.Model
@@ -18,9 +19,9 @@ namespace knightsTour.Model
             new Move(-1,-2),
         };
 
-        public HashSet<Move> GenerateLegalMoves(Chessboard chessboard, int[,] board, int knightX, int knightY)
+        public IList<Move> GenerateLegalMoves(Chessboard chessboard, int[,] board = default, int knightX = default, int knightY = default)
         {
-            HashSet<Move> viableMoves = new HashSet<Move>();
+            IList<Move> viableMoves = new List<Move>();
 
             foreach (Move move in moves)
             {
@@ -47,6 +48,26 @@ namespace knightsTour.Model
             }
 
             return false;
+        }
+
+        public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
+        {
+            IList<Tuple<int, Move>> toSort = new List<Tuple<int, Move>>();
+            List<Move> sortedList = new List<Move>();
+
+            foreach (Move move in legalMoves)
+            {
+                int legalMovesCount = GenerateLegalMoves(null, board, knightX + move.X, knightY + move.Y).Count;
+                toSort.Add(new Tuple<int, Move>(legalMovesCount, move));
+            }
+            toSort = toSort.OrderBy(i => i.Item1).ToList();
+
+            foreach (Tuple<int, Move> el in toSort)
+            {
+                sortedList.Add(el.Item2);
+            }
+
+            return sortedList;
         }
     }
 }
