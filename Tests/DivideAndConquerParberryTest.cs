@@ -18,8 +18,8 @@ namespace Tests
         public void DivideAndConquerParberry10x10()
         {
             int i = 0;
-            chessboard = new Chessboard(12,12);
-            divideAndConquerParberry = new DivideAndConquerParberry(chessboard, false);
+            chessboard = new Chessboard(16, 16);
+            divideAndConquerParberry = new DivideAndConquerParberry(chessboard, true);
             foundSolution = divideAndConquerParberry.SolveKT();
 
             while (i != 0)
