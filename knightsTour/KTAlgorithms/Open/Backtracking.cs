@@ -3,7 +3,7 @@ using System;
 
 namespace knightsTour
 {
-    public class Backtracking : KnightsTourAlgorithm
+    public class Backtracking : KTAlgorithm
     {
 
         public Backtracking(Chessboard chessboard, bool output) : base(chessboard, output)
@@ -12,22 +12,26 @@ namespace knightsTour
 
         public bool SolveKT(int x, int y)
         {
-            var clonedChessboard = Chessboard.DeepCopy();
+            Chessboard clonedChessboard = Chessboard.DeepCopy();
             Steps = 0;
 
-            if (SolveKTRecursion(clonedChessboard.Board, 1, x, y))
+            Timer.Start();
+            RecursionFoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
+            Timer.Stop();
+
+            if (RecursionFoundSolution)
             {
                 if (Output)
                 {
-                    Console.WriteLine($"Steps: {Steps}\nSolution for: x:{x} and y:{y} starting point");
-                    PrintBoard(clonedChessboard, null);
+                    Console.WriteLine($"Steps: {Steps}\nSolution for: x:{x} | y:{y} starting point");
+                    PrintBoard(clonedChessboard.Board);
                 }
 
                 return true;
             }
             else
             {
-                Console.WriteLine($"Steps: {Steps}\nCould not find a solutino with a x:{x} and y:{y} starting point\n");
+                Console.WriteLine($"Steps: {Steps}\nCould not find a solutino with a x:{x} | y:{y} starting point\n");
                 return false;
             }
         }
@@ -37,14 +41,14 @@ namespace knightsTour
             Steps++;
             board[knightY, knightX] = iteration;
 
-            if (IsFinishedByBoard(iteration, board))
+            if (IsFinished(iteration, board))
             {
                 return true;
             }
 
-            legalMoves = MovesService.GenerateLegalMoves(knightX, knightY, board);
+            LegalMoves = MovesService.CalculateLegalMoves(knightX, knightY, board);
 
-            foreach (Move move in legalMoves)
+            foreach (Move move in LegalMoves)
             {
                 int nextX = knightX + move.X;
                 int nextY = knightY + move.Y;

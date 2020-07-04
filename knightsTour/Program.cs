@@ -20,9 +20,8 @@ namespace knightsTour
             //divideAndConquerParberry.SolveKT();
 
             Chessboard chessboard = new Chessboard(5, 5);
-            Backtracking backtrackingChessboard = new Backtracking(chessboard, true);
-            backtrackingChessboard.SolveKT(0, 0);
-            backtrackingChessboard.SolveKT(2, 0);
+            Backtracking backtracking = new Backtracking(chessboard, true);
+            backtracking.SolveKT(0, 0);
         }
     }
 }

@@ -245,5 +245,11 @@ namespace knightsTour.Resources
             }
         }
 
+        public void ResetSetsAndPostions()
+        {
+            setIndex = 0;
+            positionsIndex = 0;
+        }
+
     }
 }

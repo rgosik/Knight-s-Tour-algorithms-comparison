@@ -19,13 +19,32 @@ namespace knightsTour.Model
             new Move(-1,-2),
         };
 
-        public IList<Move> GenerateLegalMoves(int knightX, int knightY, int[,] board = default, Chessboard chessboard = default)
+        public List<(int, int)> CalculateAllLegalClosedTourEndPoints(int knightX, int knightY, int[,] board)
         {
-            IList<Move> viableMoves = new List<Move>();
+            List<(int, int)> endPoints = new List<(int, int)>();
+            int nextX;
+            int nextY;
+
+            IList<Move> legalMoves = CalculateLegalMoves(knightX, knightY, board);
+
+            foreach (Move move in legalMoves)
+            {
+                nextX = knightX + move.X;
+                nextY = knightY + move.Y;
+
+                endPoints.Add((nextX, nextY));
+            }
+
+            return endPoints;
+        }
+
+        public List<Move> CalculateLegalMoves(int knightX, int knightY, int[,] board)
+        {
+            List<Move> viableMoves = new List<Move>();
 
             foreach (Move move in moves)
             {
-                if (MoveIsLegal(chessboard, board, move.X + knightX, move.Y + knightY))
+                if (MoveIsLegal(board, move.X + knightX, move.Y + knightY))
                 {
                     viableMoves.Add(move);
                 }
@@ -33,31 +52,24 @@ namespace knightsTour.Model
             return viableMoves;
         }
 
-        private bool MoveIsLegal(Chessboard chessboard, int[,] board, int newX, int newY)
+        private bool MoveIsLegal(int[,] board, int newX, int newY)
         {
-            if (chessboard == null)
+            if ((newX >= 0 && newX < board.GetLength(1)) && (newY >= 0 && newY < board.GetLength(0)))
             {
-                if ((newX >= 0 && newX < board.GetLength(1)) && (newY >= 0 && newY < board.GetLength(0)))
-                {
-                    return board[newY, newX] == 0;
-                }
-            }
-            else
-            {
-                return (newX >= 0 && newX < chessboard.XSize && (newY >= 0 && newY < chessboard.YSize) && chessboard.Board[newX, newY] == 0);
+                return board[newY, newX] == 0;
             }
 
             return false;
         }
 
-        public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
+        public List<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
             IList<Tuple<int, Move>> toSort = new List<Tuple<int, Move>>();
             List<Move> sortedList = new List<Move>();
 
             foreach (Move move in legalMoves)
             {
-                int legalMovesCount = GenerateLegalMoves(knightX + move.X, knightY + move.Y, board).Count;
+                int legalMovesCount = CalculateLegalMoves(knightX + move.X, knightY + move.Y, board).Count;
                 toSort.Add(new Tuple<int, Move>(legalMovesCount, move));
             }
 
