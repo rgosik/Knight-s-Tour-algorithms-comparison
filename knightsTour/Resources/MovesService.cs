@@ -20,37 +20,20 @@ namespace knightsTour.Model
             new Move(-1,-2),
         };
 
-        public IList<(int, int)> CalculateAllLegalClosedTourEndPoints(int knightX, int knightY, int[,] board)
+        private IList<(int, Move)> SortByTheAmountOfPossibleMovesInNextPosition(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
-            IList<(int, int)> endPoints = new List<(int, int)>();
-            int nextX;
-            int nextY;
-
-            IList<Move> legalMoves = CalculateLegalMoves(knightX, knightY, board);
+            IList<(int, Move)> MovesWithNextPositionsAmmount = new List<(int, Move)>();
+            IList<(int, Move)> sortedList = new List<(int, Move)>();
 
             foreach (Move move in legalMoves)
             {
-                nextX = knightX + move.X;
-                nextY = knightY + move.Y;
-
-                endPoints.Add((nextX, nextY));
+                int legalMovesCount = CalculateLegalMoves(knightX + move.X, knightY + move.Y, board).Count;
+                MovesWithNextPositionsAmmount.Add((legalMovesCount, move));
             }
 
-            return endPoints;
-        }
+            sortedList = MovesWithNextPositionsAmmount.OrderBy(i => i.Item1).ToList();
 
-        public IList<Move> CalculateLegalMoves(int knightX, int knightY, int[,] board)
-        {
-            IList<Move> viableMoves = new List<Move>();
-
-            foreach (Move move in moves)
-            {
-                if (MoveIsLegal(board, move.X + knightX, move.Y + knightY))
-                {
-                    viableMoves.Add(move);
-                }
-            }
-            return viableMoves;
+            return sortedList;
         }
 
         private (double, double) GetBoardCenter(int[,] board)
@@ -89,7 +72,7 @@ namespace knightsTour.Model
 
             foreach (List<(int, Move)> equalNeigboursList in splitLegalMoves)
             {
-                foreach ( (int, Move) move in equalNeigboursList)
+                foreach ((int, Move) move in equalNeigboursList)
                 {
                     xDist = center.Item1 - (knightX + move.Item2.X);
                     yDist = center.Item2 - (knightY + move.Item2.Y);
@@ -121,7 +104,7 @@ namespace knightsTour.Model
             return false;
         }
 
-        private List<List<(int, Move)>> SplitListOfMovesByWarnsdorffNeighbours(List<(int, Move)> source)
+        private List<List<(int, Move)>> SplitListOfMovesByWarnsdorffNeighbours(IList<(int, Move)> source)
         {
             var result = source
                 .GroupBy(x => x.Item1)
@@ -131,41 +114,61 @@ namespace knightsTour.Model
             return result;
         }
 
-        public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
+        public IList<(int, int)> CalculateAllLegalClosedTourEndPoints(int knightX, int knightY, int[,] board)
         {
-            IList<(int, Move)> toSort = new List<(int, Move)>();
-            IList<Move> sortedList = new List<Move>();
+            IList<(int, int)> endPoints = new List<(int, int)>();
+            int nextX;
+            int nextY;
+
+            IList<Move> legalMoves = CalculateLegalMoves(knightX, knightY, board);
 
             foreach (Move move in legalMoves)
             {
-                int legalMovesCount = CalculateLegalMoves(knightX + move.X, knightY + move.Y, board).Count;
-                toSort.Add((legalMovesCount, move));
+                nextX = knightX + move.X;
+                nextY = knightY + move.Y;
+
+                endPoints.Add((nextX, nextY));
             }
 
-            toSort = toSort.OrderBy(i => i.Item1).ToList();
+            return endPoints;
+        }
 
-            foreach ((int, Move) el in toSort)
+        public IList<Move> CalculateLegalMoves(int knightX, int knightY, int[,] board)
+        {
+            IList<Move> viableMoves = new List<Move>();
+
+            foreach (Move move in moves)
             {
-                sortedList.Add(el.Item2);
+                if (MoveIsLegal(board, move.X + knightX, move.Y + knightY))
+                {
+                    viableMoves.Add(move);
+                }
+            }
+            return viableMoves;
+        }
+
+        public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
+        {
+            IList<(int, Move)> sortedTuple = new List<(int, Move)>();
+            IList<Move> warnsdorfRuleSortedList = new List<Move>();
+
+            sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
+
+            foreach ((int, Move) el in sortedTuple)
+            {
+                warnsdorfRuleSortedList.Add(el.Item2);
             }
 
-            return sortedList;
+            return warnsdorfRuleSortedList;
         }
 
         public IList<Move> WarnsdorfRuleArndRothMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
-            List<(int, Move)> toSort = new List<(int, Move)>();
-            List<(int, Move)> sortedList = new List<(int, Move)>(); ;
+            IList<(int, Move)> sortedTuple = new List<(int, Move)>(); ;
             List<List<(int, Move)>> splitByNeighboursList = new List<List<(int, Move)>>();
 
-            foreach (Move move in legalMoves)
-            {
-                int legalMovesCount = CalculateLegalMoves(knightX + move.X, knightY + move.Y, board).Count;
-                toSort.Add((legalMovesCount, move));
-            }
-
-            sortedList = toSort.OrderBy(i => i.Item1).ToList();
-            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedList);
+            sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
+            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
 
             return DistanceToCenterMovesSort(splitByNeighboursList, knightX, knightY, GetBoardCenter(board));
         }

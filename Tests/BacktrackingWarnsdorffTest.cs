@@ -19,7 +19,7 @@ namespace Tests
             backtrackingWarnsdorff = new BacktrackingWarnsdorff(chessboard, true);
             foundSolution = backtrackingWarnsdorff.SolveKT(0, 0);
 
-            while (i != 10000)
+            while (i != 1)
             {
                 backtrackingWarnsdorff.SolveKT(0, 0);
                 i++;
