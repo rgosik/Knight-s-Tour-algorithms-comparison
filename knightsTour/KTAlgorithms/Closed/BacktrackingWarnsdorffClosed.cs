@@ -8,9 +8,9 @@ namespace knightsTour
 {
     public class BacktrackingWarnsdorffClosed : KTAlgorithmClosed
     {
-        private List<(int, int)> legalEndPoints;
+        private IList<(int, int)> legalEndPoints;
         private Chessboard clonedChessboard;
-        public List<Stopwatch> EndPointsStopwatchList { get; private set; }
+        public IList<Stopwatch> EndPointsStopwatchList { get; private set; }
 
         public BacktrackingWarnsdorffClosed(Chessboard chessboard, bool output) : base(chessboard, output)
         {
@@ -100,7 +100,6 @@ namespace knightsTour
                 {
                     board[nextY, nextX] = 0;
                 }
-
             }
 
             return false;

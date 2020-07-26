@@ -62,7 +62,6 @@ namespace knightsTour
                 {
                     board[nextY, nextX] = 0;
                 }
-
             }
 
             return false;

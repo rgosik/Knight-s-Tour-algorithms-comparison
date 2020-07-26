@@ -3,10 +3,10 @@ using System;
 
 namespace knightsTour
 {
-    public class BacktrackingArndRoth : KTAlgorithm
+    public class BacktrackingWarnsdorffArndRoth : KTAlgorithm
     {
 
-        public BacktrackingArndRoth(Chessboard chessboard, bool output) : base(chessboard, output)
+        public BacktrackingWarnsdorffArndRoth(Chessboard chessboard, bool output) : base(chessboard, output)
         {
         }
 
@@ -47,6 +47,8 @@ namespace knightsTour
             }
 
             LegalMoves = MovesService.CalculateLegalMoves(knightX, knightY, board);
+            LegalMoves = MovesService.WarnsdorfRuleArndRothMovesSort(LegalMoves, board, knightX, knightY);
+
 
             foreach (Move move in LegalMoves)
             {
@@ -61,7 +63,6 @@ namespace knightsTour
                 {
                     board[nextY, nextX] = 0;
                 }
-
             }
 
             return false;
