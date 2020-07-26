@@ -1,4 +1,5 @@
-﻿using System;
+﻿using knightsTour.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -8,6 +9,9 @@ namespace knightsTour.Model
 {
     public class MovesService
     {
+        private IList<(int, Move)> sortedTuple;
+        private List<List<(int, Move)>> splitByNeighboursList;
+
         public readonly IList<Move> moves = new List<Move>()
         {
             new Move(1,-2),
@@ -149,7 +153,6 @@ namespace knightsTour.Model
 
         public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
-            IList<(int, Move)> sortedTuple = new List<(int, Move)>();
             IList<Move> warnsdorfRuleSortedList = new List<Move>();
 
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
@@ -164,13 +167,43 @@ namespace knightsTour.Model
 
         public IList<Move> WarnsdorfRuleArndRothMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
-            IList<(int, Move)> sortedTuple = new List<(int, Move)>(); ;
-            List<List<(int, Move)>> splitByNeighboursList = new List<List<(int, Move)>>();
-
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
             splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
 
             return DistanceToCenterMovesSort(splitByNeighboursList, knightX, knightY, GetBoardCenter(board));
+        }
+
+        public IList<Move> WarnsdorfRuleSquirrelMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY, SquirrelMoveOrdering squirrelMoveOrdering)
+        {
+            int indexOfMove;
+            IList<(double, Move)> toSort = new List<(double, Move)>();
+            IList<Move> warnsdorfSquirrelSortedList = new List<Move>();
+
+            sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
+            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
+
+            squirrelMoveOrdering.CheckAndChangeTheMoveOrdering(knightX, knightY);
+
+            foreach (List<(int, Move)> equalNeigboursList in splitByNeighboursList)
+            {
+                foreach ((int, Move) move in equalNeigboursList)
+                {
+                    indexOfMove = squirrelMoveOrdering.list.IndexOf(move.Item2.GetTypeOfMove());
+
+                    toSort.Add((indexOfMove, move.Item2));
+                }
+
+                toSort = toSort.OrderBy(i => i.Item1).ToList();
+
+                foreach ((double, Move) el in toSort)
+                {
+                    warnsdorfSquirrelSortedList.Add(el.Item2);
+                }
+
+                toSort.Clear();
+            }
+
+            return warnsdorfSquirrelSortedList;
         }
     }
 }

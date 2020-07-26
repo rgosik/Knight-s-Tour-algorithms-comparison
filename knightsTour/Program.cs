@@ -1,4 +1,5 @@
 ﻿using knightsTour.KTAlgorithms;
+using knightsTour.KTAlgorithms.Open;
 using knightsTour.Model;
 using System;
 
@@ -23,9 +24,14 @@ namespace knightsTour
             //BacktrackingWarnsdorff backtracking = new BacktrackingWarnsdorff(chessboard, true);
             //backtracking.SolveKT(0, 0);
 
-            Chessboard chessboard = new Chessboard(50, 50);
-            BacktrackingWarnsdorffArndRoth backtracking = new BacktrackingWarnsdorffArndRoth(chessboard, true);
-            backtracking.SolveKT(0, 0);
+            //Chessboard chessboard = new Chessboard(50, 50);
+            //BacktrackingWarnsdorffArndRoth backtracking = new BacktrackingWarnsdorffArndRoth(chessboard, true);
+            //backtracking.SolveKT(0, 0);
+
+            //Chessboard chessboard = new Chessboard(9, 9);
+            //BacktrackingWarnsdorffSquirrel backtracking = new BacktrackingWarnsdorffSquirrel(chessboard, true);
+            //backtracking.SolveKT(0, 0);
         }
     }
 }
+

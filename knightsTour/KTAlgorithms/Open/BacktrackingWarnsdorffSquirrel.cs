@@ -1,14 +1,24 @@
 ﻿using knightsTour.Model;
+using knightsTour.Resources;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace knightsTour.KTAlgorithms.Open
 {
-    class BacktrackingWarnsdorffSquirrel : KTAlgorithm
+    public class BacktrackingWarnsdorffSquirrel : KTAlgorithm
     {
+        private SquirrelMoveOrdering squirrelMoveOrdering;
         public BacktrackingWarnsdorffSquirrel(Chessboard chessboard, bool output) : base(chessboard, output)
         {
+            if(chessboard.XSize == chessboard.YSize)
+            {
+                squirrelMoveOrdering = new SquirrelMoveOrdering(chessboard.XSize);
+            }
+            else
+            {
+                throw new Exception("Invalid chessboard size, provide m x m chessboard");
+            }
         }
 
         public bool SolveKT(int x, int y)
@@ -39,6 +49,8 @@ namespace knightsTour.KTAlgorithms.Open
 
         private bool SolveKTRecursion(int[,] board, int iteration, int knightX, int knightY)
         {
+
+
             Steps++;
             board[knightY, knightX] = iteration;
 
@@ -48,7 +60,7 @@ namespace knightsTour.KTAlgorithms.Open
             }
 
             LegalMoves = MovesService.CalculateLegalMoves(knightX, knightY, board);
-            LegalMoves = MovesService.WarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY);
+            LegalMoves = MovesService.WarnsdorfRuleSquirrelMovesSort(LegalMoves, board, knightX, knightY, squirrelMoveOrdering);
 
             foreach (Move move in LegalMoves)
             {
@@ -61,6 +73,7 @@ namespace knightsTour.KTAlgorithms.Open
                 }
                 else
                 {
+                    Console.WriteLine("BACKTRACK");
                     board[nextY, nextX] = 0;
                 }
             }
