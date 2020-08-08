@@ -49,8 +49,6 @@ namespace knightsTour.KTAlgorithms.Open
 
         private bool SolveKTRecursion(int[,] board, int iteration, int knightX, int knightY)
         {
-
-
             Steps++;
             board[knightY, knightX] = iteration;
 
@@ -73,7 +71,7 @@ namespace knightsTour.KTAlgorithms.Open
                 }
                 else
                 {
-                    Console.WriteLine("BACKTRACK");
+                    squirrelMoveOrdering.CheckAndChangeTheMoveOrdering(nextX, nextY, true);
                     board[nextY, nextX] = 0;
                 }
             }

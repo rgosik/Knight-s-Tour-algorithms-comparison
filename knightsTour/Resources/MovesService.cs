@@ -10,7 +10,7 @@ namespace knightsTour.Model
     public class MovesService
     {
         private IList<(int, Move)> sortedTuple;
-        private List<List<(int, Move)>> splitByNeighboursList;
+        private List<List<Move>> splitByNeighboursList;
 
         public readonly IList<Move> moves = new List<Move>()
         {
@@ -66,7 +66,7 @@ namespace knightsTour.Model
             return (x, y);
         }
 
-        private IList<Move> DistanceToCenterMovesSort(List<List<(int, Move)>> splitLegalMoves, int knightX, int knightY, (double, double) center)
+        private IList<Move> DistanceToCenterMovesSort(List<List<Move>> splitLegalMoves, int knightX, int knightY, (double, double) center)
         {
             double xDist;
             double yDist;
@@ -74,15 +74,15 @@ namespace knightsTour.Model
             IList<Move> sortedList = new List<Move>();
             IList<(double, Move)> toSort = new List<(double, Move)>();
 
-            foreach (List<(int, Move)> equalNeigboursList in splitLegalMoves)
+            foreach (List<Move> equalNeigboursList in splitLegalMoves)
             {
-                foreach ((int, Move) move in equalNeigboursList)
+                foreach (Move move in equalNeigboursList)
                 {
-                    xDist = center.Item1 - (knightX + move.Item2.X);
-                    yDist = center.Item2 - (knightY + move.Item2.Y);
+                    xDist = center.Item1 - (knightX + move.X);
+                    yDist = center.Item2 - (knightY + move.Y);
 
                     c = Math.Sqrt(Math.Pow(xDist, 2) + (Math.Pow(yDist, 2)));
-                    toSort.Add((c, move.Item2));
+                    toSort.Add((c, move));
                 }
 
                 toSort = toSort.OrderByDescending(i => i.Item1).ToList();
@@ -108,11 +108,11 @@ namespace knightsTour.Model
             return false;
         }
 
-        private List<List<(int, Move)>> SplitListOfMovesByWarnsdorffNeighbours(IList<(int, Move)> source)
+        private List<List<Move>> SplitListOfMovesByWarnsdorffNeighbours(IList<(int, Move)> source)
         {
             var result = source
                 .GroupBy(x => x.Item1)
-                .Select(x => x.Select(v => (v.Item1, v.Item2)).ToList())
+                .Select(x => x.Select(v => (v.Item2)).ToList())
                 .ToList();
 
             return result;
@@ -184,25 +184,31 @@ namespace knightsTour.Model
 
             squirrelMoveOrdering.CheckAndChangeTheMoveOrdering(knightX, knightY);
 
-            foreach (List<(int, Move)> equalNeigboursList in splitByNeighboursList)
+            foreach (List<Move> list in splitByNeighboursList)
             {
-                foreach ((int, Move) move in equalNeigboursList)
+                if (list.Count > 1)
                 {
-                    indexOfMove = squirrelMoveOrdering.list.IndexOf(move.Item2.GetTypeOfMove());
+                    foreach (Move move in list)
+                    {
+                        indexOfMove = squirrelMoveOrdering.MovesOreding.IndexOf(move.GetTypeOfMove());
+                        toSort.Add((indexOfMove, move));
+                    }
 
-                    toSort.Add((indexOfMove, move.Item2));
+                    toSort = toSort.OrderBy(i => i.Item1).ToList();
+
+                    foreach ((double, Move) el in toSort)
+                    {
+                        warnsdorfSquirrelSortedList.Add(el.Item2);
+                    }
+
+                    toSort.Clear();
                 }
-
-                toSort = toSort.OrderBy(i => i.Item1).ToList();
-
-                foreach ((double, Move) el in toSort)
+                else
                 {
-                    warnsdorfSquirrelSortedList.Add(el.Item2);
+                    warnsdorfSquirrelSortedList.Add(list[0]);
                 }
-
-                toSort.Clear();
             }
-
+            
             return warnsdorfSquirrelSortedList;
         }
     }

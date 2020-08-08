@@ -6,117 +6,253 @@ namespace knightsTour.Resources
 {
     public class SquirrelMoveOrdering
     {
-        private int currentOrderingIndex; // How to reset to correct value after backtracking, probably resign having it as a class field
+        private int index;
         private int size;
         private int sizeMod8;
+        private bool sizeMod16Eq5;
+        private IList<int>[] list = new List<int>[8];
 
-        public IList<int> list; // How to reset to correct value after backtracking, probably resign having it as a class field
-
+        public IList<int> MovesOreding => list[index];
+        
         public SquirrelMoveOrdering(int size)
         {
             this.size = size;
 
             sizeMod8 = size % 8;
-            currentOrderingIndex = 0;
+            index = 0;
+
+            sizeMod16Eq5 = (size % 16) == 5; 
 
             switch (sizeMod8)
             {
-                case int n when (n == 0 || n == 1 || n == 2 || n == 4 || n == 5 || n == 6) :
-                    list = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                case 0:
+                    list[0] = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                    list[1] = new List<int>() { 8, 7, 6, 4, 2, 1, 3, 5 };
+                    list[2] = new List<int>() { 5, 1, 8, 6, 7, 3, 4, 2 };
+                    list[3] = new List<int>() { 5, 1, 3, 4, 2, 6, 7, 8 };
+                    list[4] = new List<int>() { 2, 1, 4, 3, 5, 6, 7, 8 };
                     break;
-                case int n when (n == 3 || n == 7) :
-                    list = new List<int>() { 3, 4, 6, 2, 5, 7, 1, 8 };
+                case 1 :
+                    list[0] = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                    list[1] = new List<int>() { 8, 7, 6, 4, 2, 1, 3, 5 };
+                    list[2] = new List<int>() { 5, 1, 3, 2, 4, 6, 7, 8 };
+                    list[3] = new List<int>() { 3, 2, 4, 8, 1, 7, 6, 5 };
+                    break;
+                case 2:
+                    list[0] = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                    list[1] = new List<int>() { 8, 7, 6, 4, 2, 1, 3, 5 };
+                    list[2] = new List<int>() { 5, 4, 1, 3, 2, 6, 7, 8 };
+                    list[3] = new List<int>() { 5, 2, 4, 3, 1, 6, 7, 8 };
+                    list[4] = new List<int>() { 8, 5, 6, 4, 7, 1, 2, 3 };
+                    list[5] = new List<int>() { 1, 5, 7, 4, 6, 8, 2, 3 };
+                    break;
+                case 3:
+                    list[0] = new List<int>() { 3, 4, 6, 2, 5, 7, 1, 8 };
+                    list[1] = new List<int>() { 4, 2, 6, 8, 1 ,3, 5, 7 };
+                    list[2] = new List<int>() { 8, 6, 5, 1, 2, 3, 4, 7 };
+                    list[3] = new List<int>() { 5, 1, 8, 6, 7, 3, 4, 2 };
+                    list[4] = new List<int>() { 6, 1, 8, 2, 5, 4, 3, 7 };
+                    list[5] = new List<int>() { 7, 1, 6, 4, 2, 5, 3, 8 };
+                    break;
+                case 4:
+                    list[0] = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                    list[1] = new List<int>() { 8, 7, 6, 4, 2, 1, 3, 5 };
+                    list[2] = new List<int>() { 5, 1, 8, 6, 7, 3, 4, 2 };
+                    list[3] = new List<int>() { 5, 1, 3, 4, 2, 6, 7, 8 };
+                    list[4] = new List<int>() { 8, 6, 7, 5, 3, 4, 2, 1 };
+                    list[5] = new List<int>() { 7, 8, 5, 6, 3, 4, 2, 1 };
+                    break;
+                case 5:
+                    list[0] = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                    list[1] = new List<int>() { 8, 7, 6, 4, 2, 1, 3, 5 };
+                    list[2] = new List<int>() { 5, 1, 3, 2, 4, 6, 7, 8 };
+                    list[3] = new List<int>() { 1, 5, 2, 3, 4, 6, 7, 8 };
+                    break;
+                case 6:
+                    list[0] = new List<int>() { 3, 4, 2, 6, 1, 5, 7, 8 };
+                    list[1] = new List<int>() { 8, 7, 6, 4, 2, 1, 3, 5 };
+                    list[2] = new List<int>() { 5, 4, 1, 3, 2, 6, 7, 8 };
+                    list[3] = new List<int>() { 5, 2, 4, 3, 1, 6, 7, 8 };
+                    list[4] = new List<int>() { 8, 5, 6, 4, 7, 1, 2, 3 };
+                    list[5] = new List<int>() { 1, 2, 4, 5, 3, 6, 7, 8 };
+                    break;
+                case 7:
+                    list[0] = new List<int>() { 3, 4, 6, 2, 5, 7, 1, 8 };
+                    list[1] = new List<int>() { 4, 2, 6, 8, 1, 3, 5, 7 };
+                    list[2] = new List<int>() { 8, 6, 5, 1, 2, 3, 4, 7 };
+                    list[3] = new List<int>() { 5, 1, 8, 6, 7, 3, 4, 2 };
+                    list[4] = new List<int>() { 6, 1, 8, 2, 5, 4, 3, 7 };
+                    list[5] = new List<int>() { 6, 1, 3, 5, 7, 2, 8, 4 };
                     break;
             }
         }
 
-        private void EditList(int[] newValues)
-        {
-            for(int i = 0; i < list.Count; i++)
-            {
-                list[i] = newValues[i];
-            }
-        }
-
-        public void CheckAndChangeTheMoveOrdering(int x, int y)
+        public void CheckAndChangeTheMoveOrdering(int x, int y, bool backtracking = default)
         {
             switch (sizeMod8)
             {
                 case 0:
-                    if (x == size - 1 && y == size - 2 && currentOrderingIndex == 0)
+                    if (x == size - 1 && y == size - 2 && ( index == 0 || (backtracking && index == 1) ))
                     {
-                        currentOrderingIndex = 1;
-                        EditList(new int[] { 8, 7, 6, 4, 2, 1, 3, 5 });
+                        index = backtracking ? 0 : 1; 
                     }
-                    else if (x == 2 && y == 2 && currentOrderingIndex == 1)
+                    else if (x == 2 && y == 2 && ( index == 1 || (backtracking && index == 2) ))
                     {
-                        currentOrderingIndex = 2;
-                        EditList(new int[] { 5, 1, 8, 6, 7, 3, 4, 2 });
+                        index = backtracking ? 1 : 2;
                     }
-                    else if (x == size - 8 && y == 1 && currentOrderingIndex == 2)
+                    else if (x == size - 8 && y == 1 && ( index == 2 || (backtracking && index == 3) ))
                     {
-                        currentOrderingIndex = 3;
-                        EditList(new int[] { 5, 1, 3, 4, 2, 6, 7, 8 });
+                        index = backtracking ? 2 : 3;
                     }
-                    else if (x == 7 && y == size - 3 && currentOrderingIndex == 3) 
+                    else if (x == 7 && y == size - 3 && ( index == 3 || (backtracking && index == 4) )) 
                     {
-                        currentOrderingIndex = 4;
-                        EditList(new int[] { 2, 1, 4, 3, 5, 6, 7, 8 });
+                        index = backtracking ? 3 : 4;
                     }
                     break;
                 case 1:
-                    if (x == size - 1 && y == size - 2 && currentOrderingIndex == 0)
+                    if (x == size - 1 && y == size - 2 && index == 0)
                     {
-                        currentOrderingIndex = 1;
-                        EditList(new int[] { 8, 7, 6, 4, 2, 1, 3, 5 });
+                        index = 1;
                     }
-                    else if (x == 2 && y == 2 && currentOrderingIndex == 1)
+                    else if (x == 2 && y == 2 && index == 1)
                     {
-                        currentOrderingIndex = 2;
-                        EditList(new int[] { 5, 1, 3, 2, 4, 6, 7, 8 });
+                        index = 2;
                     }
-                    else if (x == size - 6 && y == (size + 9) / 2 && currentOrderingIndex == 2)
+                    else if (x == size - 6 && y == (size + 9) / 2 && index == 2)
                     {
-                        currentOrderingIndex = 3;
-                        EditList(new int[] { 3, 2, 4, 8, 1, 7, 6, 5 });
+                        index = 3;
                     }
                     break;
                 case 2:
-                    if (x == 6 && y == 1 && currentOrderingIndex == 0)
+                    if (x == 6 && y == 1 && index == 0)
                     {
-                        currentOrderingIndex = 1;
-                        EditList(new int[] { 8, 7, 6, 4, 2, 1, 3, 5 });
+                        index = 1;
                     }
-                    else if (x == 3 && y == 1 && currentOrderingIndex == 1)
+                    else if (x == 3 && y == 1 && index == 1)
                     {
-                        currentOrderingIndex = 2;
-                        EditList(new int[] { 5, 4, 1, 3, 2, 6, 7, 8 });
+                        index = 2;
                     }
-                    else if (x == size - 15 && y == 4 && currentOrderingIndex == 2)
+                    else if (x == size - 15 && y == 4 && index == 2)
                     {
-                        currentOrderingIndex = 3;
-                        EditList(new int[] { 5, 2, 4, 3, 1, 6, 7, 8 });
+                        index = 3;
                     }
-                    else if (x == 10 && y == size - 2 && currentOrderingIndex == 3)
+                    else if (x == 10 && y == size - 2 && index == 3)
                     {
-                        currentOrderingIndex = 4;
-                        EditList(new int[] { 8, 5, 6, 4, 7, 1, 2, 3 });
+                        index = 4;
                     }
-                    else if (x == 5 && y == (size - 6) / 2 && currentOrderingIndex == 4)
+                    else if (x == 5 && y == (size - 6) / 2 && index == 4)
                     {
-                        currentOrderingIndex = 5;
-                        EditList(new int[] { 1, 5, 7, 4, 6 ,8 ,2 ,3 });
+                        index = 5;
                     }
                     break;
                 case 3:
+                    if (x == size - 1 && y == size - 2 && index == 0)
+                    {
+                        index = 1;
+                    }
+                    else if (x == size - 6 && y == size && index == 1)
+                    {
+                        index = 2;
+                    }
+                    else if (x == 2 && y == 5 && index == 2)
+                    {
+                        index = 3;
+                    }
+                    else if (x == size - 10 && y == 3 && index == 3)
+                    {
+                        index = 4;
+                    }
+                    else if (x == (size + 1) / 2 && y == size - 2 && index == 4)
+                    {
+                        index = 5;
+                    }
                     break;
                 case 4:
+                    if (x == size - 1 && y == size - 2 && (index == 0 || (backtracking && index == 1) ))
+                    {
+                        index = backtracking ? 0 : 1;
+                    }
+                    else if (x == 2 && y == 2 && (index == 1 || (backtracking && index == 2) ))
+                    {
+                        index = backtracking ? 1 : 2;
+                    }
+                    else if (x == size - 8 && y == 1 && (index == 2 || (backtracking && index == 3) ))
+                    {
+                        index = backtracking ? 2 : 3;
+                    }
+                    else if (x == 10 && y == size - 5 && (index == 3 || (backtracking && index == 4) ))
+                    {
+                        index = backtracking ? 3 : 4;
+                    }
+                    else if (x == 13 && y == (size + 2) / 2 && (index == 4 || (backtracking && index == 5)) )
+                    {
+                        index = backtracking ? 4 : 5;
+                    }
                     break;
                 case 5:
+                    if (x == size - 1 && y == size - 2 && (index == 0 || (backtracking && index == 1)))
+                    {
+                        index = backtracking ? 0 : 1;
+                    }
+                    else if (x == 2 && y == 2 && (index == 1 || (backtracking && index == 2)))
+                    {
+                        index = backtracking ? 1 : 2;
+                    }
+                    else if (sizeMod16Eq5)
+                    {
+                        if (x == size - 2 && y == (size - 5) / 2 && (index == 2 || (backtracking && index == 3)))
+                        {
+                            index = backtracking ? 2 : 3;
+                        }                     
+                    }
+                    else if (x == size - 2 && y == (size - 13) /2 && (index == 2 || (backtracking && index == 3)))
+                    {
+                        index = backtracking ? 2 : 3;
+                    }
                     break;
                 case 6:
+                    if (x == 6 && y == 1 && (index == 0 || (backtracking && index == 1)))
+                    {
+                        index = backtracking ? 0 : 1;
+                    }
+                    else if (x == 3 && y == 1 && (index == 1 || (backtracking && index == 2)))
+                    {
+                        index = backtracking ? 1 : 2;
+                    }
+                    else if (x == size - 10 && y == 1 && (index == 2 || (backtracking && index == 3)))
+                    {
+                        index = backtracking ? 2 : 3;
+                    }
+                    else if (x == 10 && y == size - 2 && (index == 3 || (backtracking && index == 4)))
+                    {
+                        index = backtracking ? 3 : 4;
+                    }
+                    else if (x == 3 && y == (size + 8) / 2 && (index == 4 || (backtracking && index == 5)))
+                    {
+                        index = backtracking ? 4 : 5;
+                    }
                     break;
                 case 7:
+                    if (x == size - 1 && y == size - 2 && (index == 0 || (backtracking && index == 1)))
+                    {
+                        index = backtracking ? 0 : 1;
+                    }
+                    else if (x == size - 6 && y == size && (index == 1 || (backtracking && index == 2)))
+                    {
+                        index = backtracking ? 1 : 2;
+                    }
+                    else if (x == 2 && y == 5 && (index == 2 || (backtracking && index == 3)))
+                    {
+                        index = backtracking ? 2 : 3;
+                    }
+                    else if (x == size - 6 && y == 3 && (index == 3 || (backtracking && index == 4)))
+                    {
+                        index = backtracking ? 3 : 4;
+                    }
+                    else if (x == (size + 1) / 2 && y == size - 2 && (index == 4 || (backtracking && index == 5)))
+                    {
+                        index = backtracking ? 4 : 5;
+                    }
                     break;
             }
         }
