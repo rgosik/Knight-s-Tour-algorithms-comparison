@@ -9,6 +9,7 @@ namespace knightsTour
 {
     public abstract class KTAlgorithm
     {
+        public int Backtracks { get; protected set; }
         public bool Output { get; protected set; }
         public bool RecursionFoundSolution { get; protected set; }
         public int Steps { get; protected set; }
@@ -19,6 +20,7 @@ namespace knightsTour
 
         public KTAlgorithm(Chessboard chessboard, bool output)
         {
+            Backtracks = 0;
             Output = output;
             Steps = 0;
             Chessboard = chessboard;
@@ -38,29 +40,11 @@ namespace knightsTour
             {
                 for (int j = 0; j < board.GetLength(1); j++)
                 {
-                    Console.Write($"{board[i, j], 4}");
+                    Console.Write($"{board[i, j], 5}");
                 }
                 Console.WriteLine();
             }
             Console.WriteLine();
         }
-
-        public string GetBoard(int[,] board = default)
-        {
-            StringBuilder output = new StringBuilder("");
-
-            for (int i = 0; i < board.GetLength(0); i++)
-            {
-                for (int j = 0; j < board.GetLength(1); j++)
-                {
-                    output.Append($"{board[i, j],4}");
-                }
-                output.Append(Environment.NewLine);
-            }
-            output.Append(Environment.NewLine);
-
-            return output.ToString();
-        }
-
     }
 }

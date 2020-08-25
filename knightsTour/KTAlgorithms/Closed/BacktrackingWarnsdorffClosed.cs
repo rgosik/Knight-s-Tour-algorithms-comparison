@@ -33,7 +33,8 @@ namespace knightsTour
             for (int i = 0; i < legalEndPoints.Count; i++)
             {
                 clonedChessboard = Chessboard.DeepCopy();
-                Steps = 0;
+                Steps = 0; 
+                Backtracks = 0;
 
                 EndX = legalEndPoints[i].Item1;
                 EndY = legalEndPoints[i].Item2;
@@ -54,7 +55,7 @@ namespace knightsTour
                 }
                 else
                 {
-                    Console.WriteLine($"Steps: {Steps}\nCould not find a solutino with a x:{x} | y:{y} starting point\nEnding point: x:{EndX} | y:{EndY}\n");
+                    Console.WriteLine($"Steps: {Steps}\nCould not find a solution with a x:{x} | y:{y} starting point\nEnding point: x:{EndX} | y:{EndY}\n");
                 }
             }
 
@@ -98,6 +99,7 @@ namespace knightsTour
                 }
                 else
                 {
+                    Backtracks++;
                     board[nextY, nextX] = 0;
                 }
             }

@@ -14,6 +14,7 @@ namespace knightsTour
         {
             Chessboard clonedChessboard = Chessboard.DeepCopy();
             Steps = 0;
+            Backtracks = 0;
 
             Timer.Start();
             RecursionFoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
@@ -31,7 +32,7 @@ namespace knightsTour
             }
             else
             {
-                Console.WriteLine($"Steps: {Steps}\nCould not find a solutino with a x:{x} | y:{y} starting point\n");
+                Console.WriteLine($"Steps: {Steps}\nCould not find a solution with a x:{x} | y:{y} starting point\n");
                 return false;
             }
         }
@@ -59,50 +60,12 @@ namespace knightsTour
                 }
                 else
                 {
+                    Backtracks++;
                     board[nextY, nextX] = 0;
                 }
             }
 
             return false;
         }
-
     }
 }
-
-
-
-/*
- *         public bool SolveKT(string log = default)
-        {
-            for (int y = 0; y < Chessboard.Board.GetLength(0); y++) 
-            {
-                for (int x = 0; x < Chessboard.Board.GetLength(1); x++)
-                {
-                    var clonedChessboard = Chessboard.DeepCopy();
-                    Steps = 0;
-
-                    if (SolveKTRecursion(clonedChessboard.Board, 1, x, y))
-                    {
-                        if (!FoundOneSolution)
-                        {
-                            FoundOneSolution = true;
-                        }
-                        Console.WriteLine($"Steps: {Steps}\nSolution for: x:{x} and y:{y} starting point");
-                        PrintBoard(clonedChessboard, null);
-                    }
-                    else
-                    {
-                       Console.WriteLine($"Steps: {Steps}\nCould not find a solutino with a x:{x} and y:{y} starting point\n");
-                    }
-                }
-            }
-
-            if (!FoundOneSolution)
-            {
-                Console.WriteLine("Solution for the given problem does not exist");
-                return false;
-            }
-
-            return true;
-        }
-*/

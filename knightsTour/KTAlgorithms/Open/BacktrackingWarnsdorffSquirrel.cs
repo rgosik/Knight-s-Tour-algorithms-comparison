@@ -25,6 +25,7 @@ namespace knightsTour.KTAlgorithms.Open
         {
             Chessboard clonedChessboard = Chessboard.DeepCopy();
             Steps = 0;
+            Backtracks = 0;
 
             Timer.Start();
             RecursionFoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
@@ -42,7 +43,7 @@ namespace knightsTour.KTAlgorithms.Open
             }
             else
             {
-                Console.WriteLine($"Steps: {Steps}\nCould not find a solutino with a x:{x} | y:{y} starting point\n");
+                Console.WriteLine($"Steps: {Steps}\nCould not find a solution with a x:{x} | y:{y} starting point\n");
                 return false;
             }
         }
@@ -71,6 +72,7 @@ namespace knightsTour.KTAlgorithms.Open
                 }
                 else
                 {
+                    Backtracks++;
                     squirrelMoveOrdering.CheckAndChangeTheMoveOrdering(nextX, nextY, true);
                     board[nextY, nextX] = 0;
                 }

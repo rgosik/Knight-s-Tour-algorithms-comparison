@@ -9,6 +9,7 @@ namespace knightsTour.Model
 {
     public class MovesService
     {
+        private IList<Move> tieBreakedList;
         private IList<(int, Move)> sortedTuple;
         private List<List<Move>> splitByNeighboursList;
 
@@ -66,12 +67,12 @@ namespace knightsTour.Model
             return (x, y);
         }
 
-        private IList<Move> DistanceToCenterMovesSort(List<List<Move>> splitLegalMoves, int knightX, int knightY, (double, double) center)
+        private IList<Move> DistanceToCenterTieBreaker(List<List<Move>> splitLegalMoves, int knightX, int knightY, (double, double) center)
         {
             double xDist;
             double yDist;
             double c;
-            IList<Move> sortedList = new List<Move>();
+            tieBreakedList = new List<Move>();
             IList<(double, Move)> toSort = new List<(double, Move)>();
 
             foreach (List<Move> equalNeigboursList in splitLegalMoves)
@@ -89,13 +90,33 @@ namespace knightsTour.Model
 
                 foreach ((double, Move) el in toSort)
                 {
-                    sortedList.Add(el.Item2);
+                    tieBreakedList.Add(el.Item2);
                 }
 
                 toSort.Clear();
             }
 
-            return sortedList;
+            return tieBreakedList;
+        }
+
+        private IList<Move> RandomTieBreaker(List<List<Move>> splitLegalMoves)
+        {
+            tieBreakedList = new List<Move>();
+
+            foreach (List<Move> equalNeigboursList in splitLegalMoves)
+            {
+                if (equalNeigboursList.Count > 1)
+                {
+                    equalNeigboursList.Shuffle();
+                }
+
+                foreach (Move el in equalNeigboursList)
+                {
+                    tieBreakedList.Add(el);
+                }
+            }
+
+            return tieBreakedList;
         }
 
         private bool MoveIsLegal(int[,] board, int newX, int newY)
@@ -156,13 +177,9 @@ namespace knightsTour.Model
             IList<Move> warnsdorfRuleSortedList = new List<Move>();
 
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
+            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
 
-            foreach ((int, Move) el in sortedTuple)
-            {
-                warnsdorfRuleSortedList.Add(el.Item2);
-            }
-
-            return warnsdorfRuleSortedList;
+            return RandomTieBreaker(splitByNeighboursList);
         }
 
         public IList<Move> WarnsdorfRuleArndRothMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
@@ -170,7 +187,7 @@ namespace knightsTour.Model
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
             splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
 
-            return DistanceToCenterMovesSort(splitByNeighboursList, knightX, knightY, GetBoardCenter(board));
+            return DistanceToCenterTieBreaker(splitByNeighboursList, knightX, knightY, GetBoardCenter(board));
         }
 
         public IList<Move> WarnsdorfRuleSquirrelMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY, SquirrelMoveOrdering squirrelMoveOrdering)
@@ -208,7 +225,7 @@ namespace knightsTour.Model
                     warnsdorfSquirrelSortedList.Add(list[0]);
                 }
             }
-            
+
             return warnsdorfSquirrelSortedList;
         }
     }

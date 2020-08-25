@@ -75,6 +75,7 @@ namespace knightsTour.KTAlgorithms
                     }
 
                     Steps = 0;
+                    Backtracks = 0;
 
                     if (!DnCPositions.ChangeToPostionsOfNextQuater())
                     {
@@ -88,7 +89,7 @@ namespace knightsTour.KTAlgorithms
                 }
                 else
                 {
-                    Console.WriteLine($"Could not find a solutino for Q{quadrantIndex}\nSteps: {Steps}\nStarting point = x:{startX} | y:{startY}\nCHANGING SET OF POSITIONS\n");
+                    Console.WriteLine($"Could not find a solution for Q{quadrantIndex}\nSteps: {Steps}\nStarting point = x:{startX} | y:{startY}\nCHANGING SET OF POSITIONS\n");
                     if (DnCPositions.ChangeToNextSet())
                     {
                         Timer.Reset();
@@ -134,6 +135,7 @@ namespace knightsTour.KTAlgorithms
                 }
                 else
                 {
+                    Backtracks++;
                     board[nextY, nextX] = 0;
                 }
             }
