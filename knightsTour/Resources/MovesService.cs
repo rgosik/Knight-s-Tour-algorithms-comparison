@@ -174,8 +174,6 @@ namespace knightsTour.Model
 
         public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
-            IList<Move> warnsdorfRuleSortedList = new List<Move>();
-
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
             splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
 

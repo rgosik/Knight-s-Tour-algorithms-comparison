@@ -61,10 +61,10 @@ namespace knightsTour.KTAlgorithms
                 EndY = DnCPositions.GetEndPosition().Item2;
 
                 Timer.Start();
-                RecursionFoundSolution = SolveKTRecursion(clonedQuadrantChessboard.Board, 1, startX, startY);
+                FoundSolution = SolveKTRecursion(clonedQuadrantChessboard.Board, 1, startX, startY);
                 Timer.Stop();
 
-                if (RecursionFoundSolution)
+                if (FoundSolution)
                 {
                     TotalSteps += Steps;
 

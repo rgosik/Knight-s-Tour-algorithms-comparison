@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="KTAlgorithms\Open\Backtracking.cs~RF2a9f41bd.TMP" />
     <None Remove="KTAlgorithms\wbllt0k5.h1n~" />
   </ItemGroup>
 

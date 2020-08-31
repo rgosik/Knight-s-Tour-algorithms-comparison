@@ -40,10 +40,10 @@ namespace knightsTour
                 EndY = legalEndPoints[i].Item2;
 
                 EndPointsStopwatchList[i].Start();
-                RecursionFoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
+                FoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
                 EndPointsStopwatchList[i].Stop();
 
-                if (RecursionFoundSolution)
+                if (FoundSolution)
                 {
                     if (Output)
                     {

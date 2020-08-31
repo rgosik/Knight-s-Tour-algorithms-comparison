@@ -20,10 +20,11 @@ namespace knightsTour
             //backtrackingWarnsdorff = new Backtracking(backTrackingWarnsdorffChessboard, true);
             //backtrackingWarnsdorff.SolveKT(0, 0);
 
+            //Chessboard backTrackingWarnsdorffChessboard = new Chessboard(75, 75);
+            //BacktrackingWarnsdorff backtrackingWarnsdorff = new BacktrackingWarnsdorff(backTrackingWarnsdorffChessboard, true);
+            //backtrackingWarnsdorff.SolveKT(0, 0);
 
-            Chessboard backTrackingWarnsdorffChessboard = new Chessboard(75, 75);
-            BacktrackingWarnsdorff backtrackingWarnsdorff = new BacktrackingWarnsdorff(backTrackingWarnsdorffChessboard, true);
-            backtrackingWarnsdorff.SolveKT(0, 0);
+
 
             //Chessboard divideAndConquerParberryChessboard = new Chessboard(16, 16);
             //DivideAndConquerParberry divideAndConquerParberry = new DivideAndConquerParberry(divideAndConquerParberryChessboard, true);
@@ -40,6 +41,10 @@ namespace knightsTour
             //Chessboard chessboard1 = new Chessboard(8,8);
             //BacktrackingWarnsdorffSquirrel backtracking1 = new BacktrackingWarnsdorffSquirrel(chessboard1, true);
             //backtracking1.SolveKT(0, 0);
+
+            Chessboard chessboard = new Chessboard(300, 300);
+            WarnsdorffArndRoth backtracking = new WarnsdorffArndRoth(chessboard, true);
+            backtracking.SolveKT(0, 0);
         }
     }
 }

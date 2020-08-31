@@ -17,10 +17,10 @@ namespace knightsTour
             Backtracks = 0;
 
             Timer.Start();
-            RecursionFoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
+            FoundSolution = SolveKTRecursion(clonedChessboard.Board, 1, x, y);
             Timer.Stop();
 
-            if (RecursionFoundSolution)
+            if (FoundSolution)
             {
                 if (Output)
                 {
