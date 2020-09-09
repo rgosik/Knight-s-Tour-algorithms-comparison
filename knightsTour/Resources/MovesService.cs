@@ -88,9 +88,21 @@ namespace knightsTour.Model
 
                 toSort = toSort.OrderByDescending(i => i.Item1).ToList();
 
-                foreach ((double, Move) el in toSort)
+                if (toSort.GroupBy(x => x.Item1).Any(g => g.Count() > 1))
                 {
-                    tieBreakedList.Add(el.Item2);
+                    var randomTieBreaked = RandomTieBreaker(SplitListOfMovesByTupleItem1(toSort));
+
+                    foreach (Move el in randomTieBreaked.ToList())
+                    {
+                        tieBreakedList.Add(el);
+                    }
+                }
+                else
+                {
+                    foreach ((double, Move) el in toSort)
+                    {
+                        tieBreakedList.Add(el.Item2);
+                    }
                 }
 
                 toSort.Clear();
@@ -129,7 +141,7 @@ namespace knightsTour.Model
             return false;
         }
 
-        private List<List<Move>> SplitListOfMovesByWarnsdorffNeighbours(IList<(int, Move)> source)
+        private List<List<Move>> SplitListOfMovesByTupleItem1<T>(IList<(T, Move)> source)
         {
             var result = source
                 .GroupBy(x => x.Item1)
@@ -175,7 +187,7 @@ namespace knightsTour.Model
         public IList<Move> WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
-            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
+            splitByNeighboursList = SplitListOfMovesByTupleItem1(sortedTuple);
 
             return RandomTieBreaker(splitByNeighboursList);
         }
@@ -183,7 +195,7 @@ namespace knightsTour.Model
         public IList<Move> WarnsdorfRuleArndRothMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
         {
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
-            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
+            splitByNeighboursList = SplitListOfMovesByTupleItem1(sortedTuple);
 
             return DistanceToCenterTieBreaker(splitByNeighboursList, knightX, knightY, GetBoardCenter(board));
         }
@@ -195,7 +207,7 @@ namespace knightsTour.Model
             IList<Move> warnsdorfSquirrelSortedList = new List<Move>();
 
             sortedTuple = SortByTheAmountOfPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
-            splitByNeighboursList = SplitListOfMovesByWarnsdorffNeighbours(sortedTuple);
+            splitByNeighboursList = SplitListOfMovesByTupleItem1(sortedTuple);
 
             squirrelMoveOrdering.CheckAndChangeTheMoveOrdering(knightX, knightY);
 

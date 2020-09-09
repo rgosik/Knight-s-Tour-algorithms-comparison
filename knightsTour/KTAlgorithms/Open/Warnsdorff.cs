@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace knightsTour
 {
-    public class WarnsdorffArndRoth : KTAlgorithm
+    public class Warnsdorff : KTAlgorithm
     {
 
-        public WarnsdorffArndRoth(Chessboard chessboard, bool output) : base(chessboard, output)
+        public Warnsdorff(Chessboard chessboard, bool output) : base(chessboard, output)
         {
         }
 
@@ -49,16 +49,17 @@ namespace knightsTour
 
                 if (LegalMoves.Count == 0) return false;
 
-                MoveToMake = MovesService.WarnsdorfRuleArndRothMovesSort(LegalMoves, board, knightX, knightY).First();
-                
+                MoveToMake = MovesService.WarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY).First();
+
                 knightX += MoveToMake.X;
                 knightY += MoveToMake.Y;
-                iteration++;                
+                iteration++;
             }
 
             board[knightY, knightX] = iteration;
 
             return true;
         }
+
     }
 }

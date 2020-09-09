@@ -9,7 +9,7 @@ namespace knightsTour
     {
         static void Main(string[] args)
         {
-            // 75 MAX
+            var size = 1000;
 
             //3,8
             //5,5
@@ -42,9 +42,13 @@ namespace knightsTour
             //BacktrackingWarnsdorffSquirrel backtracking1 = new BacktrackingWarnsdorffSquirrel(chessboard1, true);
             //backtracking1.SolveKT(0, 0);
 
-            Chessboard chessboard = new Chessboard(300, 300);
+            Chessboard chessboard = new Chessboard(size, size);
             WarnsdorffArndRoth backtracking = new WarnsdorffArndRoth(chessboard, true);
             backtracking.SolveKT(0, 0);
+
+            //Chessboard chessboard = new Chessboard(100, 100);
+            //Warnsdorff warnsdorff = new Warnsdorff(chessboard, true);
+            //warnsdorff.SolveKT(0, 0);
         }
     }
 }
