@@ -12,11 +12,11 @@ namespace Tests
         private int success;
 
         [TestMethod]
-        public void Warnsdorff78x78At0n0SuccessRateTest()
+        public void WarnsdorffSuccessRateTest()
         {
             int target = 10000;
             int i = 0;
-            chessboard = new Chessboard(200, 200);
+            chessboard = new Chessboard(100, 100);
             warnsdorff = new Warnsdorff(chessboard, false);
 
             while (i != target)

@@ -117,7 +117,7 @@ namespace knightsTour.KTAlgorithms
             }
 
             LegalMoves = MovesService.CalculateLegalMoves(knightX, knightY, board);
-            LegalMoves = MovesService.WarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY);
+            LegalMoves = SolvingAlgorithms.BactrackingWarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY);
 
             foreach (Move move in LegalMoves)
             {

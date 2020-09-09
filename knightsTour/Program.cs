@@ -38,13 +38,13 @@ namespace knightsTour
             //BacktrackingWarnsdorffArndRoth backtracking = new BacktrackingWarnsdorffArndRoth(chessboard, true);
             //backtracking.SolveKT(0, 0);
 
-            //Chessboard chessboard1 = new Chessboard(8,8);
-            //BacktrackingWarnsdorffSquirrel backtracking1 = new BacktrackingWarnsdorffSquirrel(chessboard1, true);
-            //backtracking1.SolveKT(0, 0);
+            Chessboard chessboard1 = new Chessboard(300, 300);
+            WarnsdorffSquirrel backtracking1 = new WarnsdorffSquirrel(chessboard1, true);
+            backtracking1.SolveKT(0, 0);
 
-            Chessboard chessboard = new Chessboard(size, size);
-            WarnsdorffArndRoth backtracking = new WarnsdorffArndRoth(chessboard, true);
-            backtracking.SolveKT(0, 0);
+            //Chessboard chessboard = new Chessboard(size, size);
+            //WarnsdorffArndRoth backtracking = new WarnsdorffArndRoth(chessboard, true);
+            //backtracking.SolveKT(0, 0);
 
             //Chessboard chessboard = new Chessboard(100, 100);
             //Warnsdorff warnsdorff = new Warnsdorff(chessboard, true);

@@ -39,17 +39,16 @@ namespace knightsTour
 
         private bool SolveKTProblem(int[,] board, int iteration, int knightX, int knightY)
         {
-            Steps++;
-
             while (!IsFinished(iteration, board))
             {
+                Steps++;
                 board[knightY, knightX] = iteration;
 
                 LegalMoves = MovesService.CalculateLegalMoves(knightX, knightY, board);
 
                 if (LegalMoves.Count == 0) return false;
 
-                MoveToMake = MovesService.WarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY).First();
+                MoveToMake = SolvingAlgorithms.WarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY);
 
                 knightX += MoveToMake.X;
                 knightY += MoveToMake.Y;

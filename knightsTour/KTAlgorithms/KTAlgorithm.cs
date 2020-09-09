@@ -1,4 +1,5 @@
 ﻿using knightsTour.Model;
+using knightsTour.Resources;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,6 +17,7 @@ namespace knightsTour
         public int Steps { get; protected set; }
         public Chessboard Chessboard { get; protected set; }
         public MovesService MovesService { get; protected set; }
+        public SolvingAlgorithms SolvingAlgorithms { get; protected set; }
         public IList<Move> LegalMoves { get; protected set; }
         public Move MoveToMake { get; protected set; }
         public Stopwatch Timer { get; protected set; }
@@ -27,6 +29,7 @@ namespace knightsTour
             Steps = 0;
             Chessboard = chessboard;
             MovesService = new MovesService();
+            SolvingAlgorithms = new SolvingAlgorithms(MovesService);
             LegalMoves = new List<Move>();
             Timer = new Stopwatch();
         }

@@ -87,26 +87,26 @@ namespace knightsTour.Resources
             }
         }
 
-        public void CheckAndChangeTheMoveOrdering(int x, int y, bool backtracking = default)
+        public void CheckAndChangeTheMoveOrdering(int x, int y)
         {
             switch (sizeMod8)
             {
                 case 0:
-                    if (x == size - 1 && y == size - 2 && ( index == 0 || (backtracking && index == 1) ))
+                    if (x == size - 1 && y == size - 2 && index == 0)
                     {
-                        index = backtracking ? 0 : 1; 
+                        index =  1; 
                     }
-                    else if (x == 2 && y == 2 && ( index == 1 || (backtracking && index == 2) ))
+                    else if (x == 2 && y == 2 && index == 1)
                     {
-                        index = backtracking ? 1 : 2;
+                        index = 2;
                     }
-                    else if (x == size - 8 && y == 1 && ( index == 2 || (backtracking && index == 3) ))
+                    else if (x == size - 8 && y == 1 && index == 2)
                     {
-                        index = backtracking ? 2 : 3;
+                        index = 3;
                     }
-                    else if (x == 7 && y == size - 3 && ( index == 3 || (backtracking && index == 4) )) 
+                    else if (x == 7 && y == size - 3 & index == 3) 
                     {
-                        index = backtracking ? 3 : 4;
+                        index = 4;
                     }
                     break;
                 case 1:
@@ -168,90 +168,90 @@ namespace knightsTour.Resources
                     }
                     break;
                 case 4:
-                    if (x == size - 1 && y == size - 2 && (index == 0 || (backtracking && index == 1) ))
+                    if (x == size - 1 && y == size - 2 && index == 0)
                     {
-                        index = backtracking ? 0 : 1;
+                        index = 1;
                     }
-                    else if (x == 2 && y == 2 && (index == 1 || (backtracking && index == 2) ))
+                    else if (x == 2 && y == 2 && index == 1)
                     {
-                        index = backtracking ? 1 : 2;
+                        index = 2;
                     }
-                    else if (x == size - 8 && y == 1 && (index == 2 || (backtracking && index == 3) ))
+                    else if (x == size - 8 && y == 1 && index == 2)
                     {
-                        index = backtracking ? 2 : 3;
+                        index = 3;
                     }
-                    else if (x == 10 && y == size - 5 && (index == 3 || (backtracking && index == 4) ))
+                    else if (x == 10 && y == size - 5 && index == 3)
                     {
-                        index = backtracking ? 3 : 4;
+                        index = 4;
                     }
-                    else if (x == 13 && y == (size + 2) / 2 && (index == 4 || (backtracking && index == 5)) )
+                    else if (x == 13 && y == (size + 2) / 2 && index == 4)
                     {
-                        index = backtracking ? 4 : 5;
+                        index = 5;
                     }
                     break;
                 case 5:
-                    if (x == size - 1 && y == size - 2 && (index == 0 || (backtracking && index == 1)))
+                    if (x == size - 1 && y == size - 2 && index == 0 )
                     {
-                        index = backtracking ? 0 : 1;
+                        index = 1;
                     }
-                    else if (x == 2 && y == 2 && (index == 1 || (backtracking && index == 2)))
+                    else if (x == 2 && y == 2 && index == 1)
                     {
-                        index = backtracking ? 1 : 2;
+                        index = 2;
                     }
                     else if (sizeMod16Eq5)
                     {
-                        if (x == size - 2 && y == (size - 5) / 2 && (index == 2 || (backtracking && index == 3)))
+                        if (x == size - 2 && y == (size - 5) / 2 && index == 2)
                         {
-                            index = backtracking ? 2 : 3;
+                            index = 3;
                         }                     
                     }
-                    else if (x == size - 2 && y == (size - 13) /2 && (index == 2 || (backtracking && index == 3)))
+                    else if (x == size - 2 && y == (size - 13) /2 && index == 2)
                     {
-                        index = backtracking ? 2 : 3;
+                        index = 3;
                     }
                     break;
                 case 6:
-                    if (x == 6 && y == 1 && (index == 0 || (backtracking && index == 1)))
+                    if (x == 6 && y == 1 && index == 0)
                     {
-                        index = backtracking ? 0 : 1;
+                        index = 1;
                     }
-                    else if (x == 3 && y == 1 && (index == 1 || (backtracking && index == 2)))
+                    else if (x == 3 && y == 1 && index == 1)
                     {
-                        index = backtracking ? 1 : 2;
+                        index = 2;
                     }
-                    else if (x == size - 10 && y == 1 && (index == 2 || (backtracking && index == 3)))
+                    else if (x == size - 10 && y == 1 && index == 2)
                     {
-                        index = backtracking ? 2 : 3;
+                        index = 3;
                     }
-                    else if (x == 10 && y == size - 2 && (index == 3 || (backtracking && index == 4)))
+                    else if (x == 10 && y == size - 2 && index == 3)
                     {
-                        index = backtracking ? 3 : 4;
+                        index = 4;
                     }
-                    else if (x == 3 && y == (size + 8) / 2 && (index == 4 || (backtracking && index == 5)))
+                    else if (x == 3 && y == (size + 8) / 2 && index == 4)
                     {
-                        index = backtracking ? 4 : 5;
+                        index = 5;
                     }
                     break;
                 case 7:
-                    if (x == size - 1 && y == size - 2 && (index == 0 || (backtracking && index == 1)))
+                    if (x == size - 1 && y == size - 2 && index == 0)
                     {
-                        index = backtracking ? 0 : 1;
+                        index = 1;
                     }
-                    else if (x == size - 6 && y == size && (index == 1 || (backtracking && index == 2)))
+                    else if (x == size - 6 && y == size && index == 1)
                     {
-                        index = backtracking ? 1 : 2;
+                        index = 2;
                     }
-                    else if (x == 2 && y == 5 && (index == 2 || (backtracking && index == 3)))
+                    else if (x == 2 && y == 5 && index == 2)
                     {
-                        index = backtracking ? 2 : 3;
+                        index = 3;
                     }
-                    else if (x == size - 6 && y == 3 && (index == 3 || (backtracking && index == 4)))
+                    else if (x == size - 6 && y == 3 && index == 3)
                     {
-                        index = backtracking ? 3 : 4;
+                        index = 4;
                     }
-                    else if (x == (size + 1) / 2 && y == size - 2 && (index == 4 || (backtracking && index == 5)))
+                    else if (x == (size + 1) / 2 && y == size - 2 && index == 4)
                     {
-                        index = backtracking ? 4 : 5;
+                        index = 5;
                     }
                     break;
             }
