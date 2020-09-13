@@ -9,15 +9,13 @@ namespace knightsTour.Model
     [Serializable]
     public class Chessboard
     {
-        public int[,] Board { get; private set; }
-        public int XSize { get; private set; }
-        public int YSize { get; private set; }
+        public int[,] Board { get; set; }
+        public int XSize => Board.GetLength(0);
+        public int YSize => Board.GetLength(1);
 
         public Chessboard(int xSize, int ySize)
         {
             Board = new int[ySize, xSize];
-            YSize = ySize;
-            XSize = xSize;
         }
 
         public Chessboard DeepCopy()

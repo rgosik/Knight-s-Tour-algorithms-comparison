@@ -1,17 +1,31 @@
-﻿using knightsTour;
+﻿using FluentAssertions;
+using knightsTour;
 using knightsTour.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-    [TestClass]
-    public class BacktrackingWarnsdorffTest
+    public class BacktrackingWarnsdorffTest : IDisposable
     {
         private bool foundSolution;
         private Chessboard chessboard;
         private BacktrackingWarnsdorff backtrackingWarnsdorff;
+        private readonly ITestOutputHelper output;
 
-        [TestMethod]
+        public BacktrackingWarnsdorffTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
+        public void Dispose()
+        {
+            foundSolution = false;
+            backtrackingWarnsdorff = null;
+        }
+
+        [Fact]
         public void BacktrackingWarnsdorff5x5At0n0()
         {
             int i = 0;
@@ -25,15 +39,8 @@ namespace Tests
                 i++;
             }
 
-            System.Console.WriteLine($"Steps per solution: {backtrackingWarnsdorff.Steps}\nTime in Milliseconds: {backtrackingWarnsdorff.Timer.ElapsedMilliseconds}");
-            Assert.IsTrue(foundSolution);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            foundSolution = false;
-            backtrackingWarnsdorff = null;
+            output.WriteLine($"Steps per solution: {backtrackingWarnsdorff.Steps}\nTime in Milliseconds: {backtrackingWarnsdorff.Timer.ElapsedMilliseconds}");
+            foundSolution.Should().BeTrue();
         }
     }
 }

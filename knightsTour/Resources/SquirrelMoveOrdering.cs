@@ -12,6 +12,7 @@ namespace knightsTour.Resources
         private bool sizeMod16Eq5;
         private IList<int>[] list = new List<int>[8];
 
+        private int AdjustedSize => size - 1;
         public IList<int> MovesOreding => list[index];
         
         public SquirrelMoveOrdering(int size)
@@ -92,7 +93,7 @@ namespace knightsTour.Resources
             switch (sizeMod8)
             {
                 case 0:
-                    if (x == size - 1 && y == size - 2 && index == 0)
+                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
                     {
                         index =  1; 
                     }
@@ -100,17 +101,17 @@ namespace knightsTour.Resources
                     {
                         index = 2;
                     }
-                    else if (x == size - 8 && y == 1 && index == 2)
+                    else if (x == AdjustedSize - 8 && y == 1 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 7 && y == size - 3 & index == 3) 
+                    else if (x == 7 && y == AdjustedSize - 3 & index == 3) 
                     {
                         index = 4;
                     }
                     break;
                 case 1:
-                    if (x == size - 1 && y == size - 2 && index == 0)
+                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
                     {
                         index = 1;
                     }
@@ -118,7 +119,7 @@ namespace knightsTour.Resources
                     {
                         index = 2;
                     }
-                    else if (x == size - 6 && y == (size + 9) / 2 && index == 2)
+                    else if (x == AdjustedSize - 6 && y == (AdjustedSize + 9) / 2 && index == 2)
                     {
                         index = 3;
                     }
@@ -132,25 +133,25 @@ namespace knightsTour.Resources
                     {
                         index = 2;
                     }
-                    else if (x == size - 15 && y == 4 && index == 2)
+                    else if (x == AdjustedSize - 15 && y == 4 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 10 && y == size - 2 && index == 3)
+                    else if (x == 10 && y == AdjustedSize - 2 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == 5 && y == (size - 6) / 2 && index == 4)
+                    else if (x == 5 && y == (AdjustedSize - 6) / 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 3:
-                    if (x == size - 1 && y == size - 2 && index == 0)
+                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == size - 6 && y == size && index == 1)
+                    else if (x == AdjustedSize - 6 && y == AdjustedSize && index == 1)
                     {
                         index = 2;
                     }
@@ -158,17 +159,17 @@ namespace knightsTour.Resources
                     {
                         index = 3;
                     }
-                    else if (x == size - 10 && y == 3 && index == 3)
+                    else if (x == AdjustedSize - 10 && y == 3 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == (size + 1) / 2 && y == size - 2 && index == 4)
+                    else if (x == (AdjustedSize + 1) / 2 && y == AdjustedSize - 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 4:
-                    if (x == size - 1 && y == size - 2 && index == 0)
+                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
                     {
                         index = 1;
                     }
@@ -176,21 +177,21 @@ namespace knightsTour.Resources
                     {
                         index = 2;
                     }
-                    else if (x == size - 8 && y == 1 && index == 2)
+                    else if (x == AdjustedSize - 8 && y == 1 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 10 && y == size - 5 && index == 3)
+                    else if (x == 10 && y == AdjustedSize - 5 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == 13 && y == (size + 2) / 2 && index == 4)
+                    else if (x == 13 && y == (AdjustedSize + 2) / 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 5:
-                    if (x == size - 1 && y == size - 2 && index == 0 )
+                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0 )
                     {
                         index = 1;
                     }
@@ -200,12 +201,12 @@ namespace knightsTour.Resources
                     }
                     else if (sizeMod16Eq5)
                     {
-                        if (x == size - 2 && y == (size - 5) / 2 && index == 2)
+                        if (x == AdjustedSize - 2 && y == (AdjustedSize - 5) / 2 && index == 2)
                         {
                             index = 3;
                         }                     
                     }
-                    else if (x == size - 2 && y == (size - 13) /2 && index == 2)
+                    else if (x == AdjustedSize - 2 && y == (AdjustedSize - 13) /2 && index == 2)
                     {
                         index = 3;
                     }
@@ -219,25 +220,25 @@ namespace knightsTour.Resources
                     {
                         index = 2;
                     }
-                    else if (x == size - 10 && y == 1 && index == 2)
+                    else if (x == AdjustedSize - 10 && y == 1 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 10 && y == size - 2 && index == 3)
+                    else if (x == 10 && y == AdjustedSize - 2 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == 3 && y == (size + 8) / 2 && index == 4)
+                    else if (x == 3 && y == (AdjustedSize + 8) / 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 7:
-                    if (x == size - 1 && y == size - 2 && index == 0)
+                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == size - 6 && y == size && index == 1)
+                    else if (x == AdjustedSize - 6 && y == AdjustedSize && index == 1)
                     {
                         index = 2;
                     }
@@ -245,11 +246,11 @@ namespace knightsTour.Resources
                     {
                         index = 3;
                     }
-                    else if (x == size - 6 && y == 3 && index == 3)
+                    else if (x == AdjustedSize - 6 && y == 3 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == (size + 1) / 2 && y == size - 2 && index == 4)
+                    else if (x == (AdjustedSize + 1) / 2 && y == AdjustedSize - 2 && index == 4)
                     {
                         index = 5;
                     }

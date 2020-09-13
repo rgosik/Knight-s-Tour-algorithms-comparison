@@ -1,17 +1,31 @@
+using FluentAssertions;
 using knightsTour;
 using knightsTour.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-    [TestClass]
-    public class BacktrackingTest
+    public class BacktrackingTest : IDisposable
     {
         private bool foundSolution;
         private Chessboard chessboard;
         private Backtracking backtracking;
+        private readonly ITestOutputHelper output;
 
-        [TestMethod]
+        public BacktrackingTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
+        public void Dispose()
+        {
+            foundSolution = false;
+            backtracking = null;
+        }
+
+        [Fact]
         public void Backtracking5x5At0n0()
         {
             int i = 0;
@@ -19,21 +33,14 @@ namespace Tests
             backtracking = new Backtracking(chessboard, false);
             foundSolution = backtracking.SolveKT(0, 0);
 
-            while (i != 100)
+            while (i != 10)
             {
                 backtracking.SolveKT(0, 0);
                 i++;
             }
 
-            System.Console.WriteLine($"Steps per solution: {backtracking.Steps}\nAmount of bactracks: {backtracking.Backtracks}\nTime in Milliseconds: {backtracking.Timer.ElapsedMilliseconds}");
-            Assert.IsTrue(foundSolution);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            foundSolution = false;
-            backtracking = null;
+            output.WriteLine($"Steps per solution: {backtracking.Steps}\nAmount of bactracks: {backtracking.Backtracks}\nTime in Milliseconds: {backtracking.Timer.ElapsedMilliseconds}");
+            foundSolution.Should().BeTrue();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace knightsTour.Resources
             return movesService.BacktrackingRandomTieBreaker(splitByNeighboursList);
         }
 
-        public Move WarnsdorfRuleMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY, bool doubleTieBreak = default)
+        public Move WarnsdorfRuleMove(IList<Move> legalMoves, int[,] board, int knightX, int knightY, bool doubleTieBreak = default)
         {
             tiedMoves = movesService.GetMovesWithLeastPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
 
@@ -42,7 +42,7 @@ namespace knightsTour.Resources
         }
 
 
-        public Move WarnsdorfRuleArndRothMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY, bool doubleTieBreak = default)
+        public Move WarnsdorfRuleArndRothMove(IList<Move> legalMoves, int[,] board, int knightX, int knightY, bool doubleTieBreak = default)
         {
             tiedMoves = movesService.GetMovesWithLeastPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
 
@@ -56,25 +56,14 @@ namespace knightsTour.Resources
             }
         }
 
-        public Move WarnsdorfRuleSquirrelMovesSort(IList<Move> legalMoves, int[,] board, int knightX, int knightY, SquirrelMoveOrdering squirrelMoveOrdering)
+        public Move WarnsdorfRuleSquirrelMove(IList<Move> legalMoves, int[,] board, int knightX, int knightY, SquirrelMoveOrdering squirrelMoveOrdering)
         {
-            int indexOfMove;
-            IList<(double, Move)> toSort = new List<(double, Move)>();
-            IList<Move> warnsdorfSquirrelSortedList = new List<Move>();
-
             tiedMoves = movesService.GetMovesWithLeastPossibleMovesInNextPosition(legalMoves, board, knightX, knightY);
-
             squirrelMoveOrdering.CheckAndChangeTheMoveOrdering(knightX, knightY);
 
             if (tiedMoves.Count > 1)
             {
-                foreach (Move move in tiedMoves)
-                {
-                    indexOfMove = squirrelMoveOrdering.MovesOreding.IndexOf(move.GetTypeOfMove());
-                    toSort.Add((indexOfMove, move));
-                }
-
-                return toSort.OrderBy(i => i.Item1).First().Item2;
+                return movesService.SquirrelTieBreaker(tiedMoves, squirrelMoveOrdering);
             }
             else
             {

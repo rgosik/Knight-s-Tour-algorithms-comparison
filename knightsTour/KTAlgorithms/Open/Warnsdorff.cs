@@ -7,7 +7,7 @@ namespace knightsTour
     public class Warnsdorff : KTAlgorithm
     {
 
-        public Warnsdorff(Chessboard chessboard, bool output) : base(chessboard, output)
+        public Warnsdorff(Chessboard chessboard, bool output = default) : base(chessboard, output)
         {
         }
 
@@ -48,7 +48,7 @@ namespace knightsTour
 
                 if (LegalMoves.Count == 0) return false;
 
-                MoveToMake = SolvingAlgorithms.WarnsdorfRuleMovesSort(LegalMoves, board, knightX, knightY);
+                MoveToMake = SolvingAlgorithms.WarnsdorfRuleMove(LegalMoves, board, knightX, knightY);
 
                 knightX += MoveToMake.X;
                 knightY += MoveToMake.Y;

@@ -1,17 +1,30 @@
 ﻿using knightsTour;
 using knightsTour.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-    [TestClass]
-    public class WarnsdorffTests
+    public class WarnsdorffTests : IDisposable
     {
         private Chessboard chessboard;
         private Warnsdorff warnsdorff;
         private int success;
+        private readonly ITestOutputHelper output;
 
-        [TestMethod]
+        public WarnsdorffTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
+        public void Dispose()
+        {
+            success = 0;
+            warnsdorff = null;
+        }
+
+        [Fact]
         public void WarnsdorffSuccessRateTest()
         {
             int target = 10000;
@@ -25,14 +38,7 @@ namespace Tests
                 i++;
             }
 
-            System.Console.WriteLine($"Successes: {success}\nSteps per solution: {warnsdorff.Steps}\nTime in Milliseconds per one solution: {warnsdorff.Timer.ElapsedMilliseconds / target}");
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            success = 0;
-            warnsdorff = null;
+            output.WriteLine($"Successes: {success}\nSteps per solution: {warnsdorff.Steps}\nTime in Milliseconds per one solution: {warnsdorff.Timer.ElapsedMilliseconds / target}");
         }
     }
 }

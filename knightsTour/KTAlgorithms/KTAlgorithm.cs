@@ -15,7 +15,7 @@ namespace knightsTour
         public bool Output { get; protected set; }
         public bool FoundSolution { get; protected set; }
         public int Steps { get; protected set; }
-        public Chessboard Chessboard { get; protected set; }
+        public Chessboard Chessboard { get; set; }
         public MovesService MovesService { get; protected set; }
         public SolvingAlgorithms SolvingAlgorithms { get; protected set; }
         public IList<Move> LegalMoves { get; protected set; }

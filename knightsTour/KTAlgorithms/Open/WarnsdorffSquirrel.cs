@@ -10,7 +10,7 @@ namespace knightsTour.KTAlgorithms.Open
     public class WarnsdorffSquirrel : KTAlgorithm
     {
         private SquirrelMoveOrdering squirrelMoveOrdering;
-        public WarnsdorffSquirrel(Chessboard chessboard, bool output) : base(chessboard, output)
+        public WarnsdorffSquirrel(Chessboard chessboard, bool output = default) : base(chessboard, output)
         {
             if(chessboard.XSize == chessboard.YSize)
             {
@@ -60,7 +60,7 @@ namespace knightsTour.KTAlgorithms.Open
 
                 if (LegalMoves.Count == 0) return false;
 
-                MoveToMake = SolvingAlgorithms.WarnsdorfRuleSquirrelMovesSort(LegalMoves, board, knightX, knightY, squirrelMoveOrdering);
+                MoveToMake = SolvingAlgorithms.WarnsdorfRuleSquirrelMove(LegalMoves, board, knightX, knightY, squirrelMoveOrdering);
 
                 knightX += MoveToMake.X;
                 knightY += MoveToMake.Y;

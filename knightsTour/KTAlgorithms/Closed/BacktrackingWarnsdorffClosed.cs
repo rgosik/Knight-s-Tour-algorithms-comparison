@@ -12,7 +12,7 @@ namespace knightsTour
         private Chessboard clonedChessboard;
         public IList<Stopwatch> EndPointsStopwatchList { get; private set; }
 
-        public BacktrackingWarnsdorffClosed(Chessboard chessboard, bool output) : base(chessboard, output)
+        public BacktrackingWarnsdorffClosed(Chessboard chessboard, bool output = default) : base(chessboard, output)
         {
             EndPointsStopwatchList = new List<Stopwatch> {
                 new Stopwatch(),

@@ -1,20 +1,31 @@
-﻿using knightsTour.KTAlgorithms;
+﻿using FluentAssertions;
+using knightsTour.KTAlgorithms;
 using knightsTour.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-    [TestClass]
-    public class DivideAndConquerParberryTest
+    public class DivideAndConquerParberryTest : IDisposable
     {
         private bool foundSolution;
         private Chessboard chessboard;
         private DivideAndConquerParberry divideAndConquerParberry;
+        private readonly ITestOutputHelper output;
 
-        [TestMethod]
+        public DivideAndConquerParberryTest(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
+        public void Dispose()
+        {
+            foundSolution = false;
+            divideAndConquerParberry = null;
+        }
+
+        [Fact]
         public void DivideAndConquerParberry10x10()
         {
             int i = 0;
@@ -29,15 +40,8 @@ namespace Tests
                 i++;
             }
 
-            System.Console.WriteLine($"Steps per solution: {divideAndConquerParberry.TotalSteps}\nTime in Milliseconds: {divideAndConquerParberry.Timer.ElapsedMilliseconds}");
-            Assert.IsTrue(foundSolution);
-        }
-
-        [TestCleanup]
-        public void Cleanup()
-        {
-            foundSolution = false;
-            divideAndConquerParberry = null;
+            output.WriteLine($"Steps per solution: {divideAndConquerParberry.TotalSteps}\nTime in Milliseconds: {divideAndConquerParberry.Timer.ElapsedMilliseconds}");
+            foundSolution.Should().BeTrue();
         }
     }
 }

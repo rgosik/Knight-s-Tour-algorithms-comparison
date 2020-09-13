@@ -1,27 +1,36 @@
-﻿using knightsTour;
+﻿using FluentAssertions;
+using knightsTour;
 using knightsTour.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-    [TestClass]
-    public class BacktrackingWarnsdorffClosedTest
+    public class BacktrackingWarnsdorffClosedTest : IDisposable
     {
         private int bestSteps;
         private bool foundSolution;
         private Chessboard chessboard;
         private BacktrackingWarnsdorffClosed backtrackingWarnsdorffClosed;
+        private readonly ITestOutputHelper output;
 
-        [TestInitialize]
-        public void Setup()
+        public BacktrackingWarnsdorffClosedTest(ITestOutputHelper output)
         {
             bestSteps = 0;
+            this.output = output;
         }
 
-        [TestMethod]
+        public void Dispose()
+        {
+            foundSolution = false;
+            backtrackingWarnsdorffClosed = null;
+        }
+
+        [Fact]
         public void BacktrackingWarnsdorffClosed5x5At0n0()
         {
             int i = 0;
@@ -40,16 +49,9 @@ namespace Tests
 
                 i++;
             }
-                   
-            System.Console.WriteLine($"Best Steps: {bestSteps}\nBest Time in Milliseconds: {GetBestTime()}");
-            Assert.IsFalse(foundSolution);
-        }
 
-        [TestCleanup]
-        public void Cleanup()
-        {
-            foundSolution = false;
-            backtrackingWarnsdorffClosed = null;
+            output.WriteLine($"Best Steps: {bestSteps}\nBest Time in Milliseconds: {GetBestTime()}");
+            foundSolution.Should().BeFalse();
         }
 
         private long GetBestTime()

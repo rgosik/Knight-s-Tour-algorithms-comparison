@@ -1,38 +1,98 @@
 ﻿using knightsTour;
 using knightsTour.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Tests
 {
-    [TestClass]
-    public class WarnsdorffArndRothTests
+    public class WarnsdorffArndRothTests : IDisposable
     {
         private Chessboard chessboard;
-        private WarnsdorffArndRoth warnsdorff;
+        private WarnsdorffArndRoth warnsdorffAR;
         private int success;
+        private readonly ITestOutputHelper output;
 
-        [TestMethod]
+        public WarnsdorffArndRothTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
+        public void Dispose()
+        {
+            success = 0;
+            warnsdorffAR = null;
+        }
+
+        [Fact]
         public void WarnsdorffArndRothSuccessRateTest()
         {
-            int target = 1000;
+            int target = 10000;
             int i = 0;
-            chessboard = new Chessboard(800, 800);
-            warnsdorff = new WarnsdorffArndRoth(chessboard, false);
+            chessboard = new Chessboard(428, 428);
+            warnsdorffAR = new WarnsdorffArndRoth(chessboard, false);
 
             while (i != target)
             {
-                if (warnsdorff.SolveKT(0, 0)) success++;
+                if (warnsdorffAR.SolveKT(0, 0)) success++;
                 i++;
             }
 
-            System.Console.WriteLine($"Successes: {success}\nSteps per solution: {warnsdorff.Steps}\nTime in Milliseconds per one solution: {warnsdorff.Timer.ElapsedMilliseconds / target}");
+            output.WriteLine($"Successes: {success}\nSteps per solution: {warnsdorffAR.Steps}\nTime in Milliseconds per one solution: {warnsdorffAR.Timer.ElapsedMilliseconds / target}");     
         }
 
-        [TestCleanup]
-        public void Cleanup()
+        [Fact]
+        public void WarnsdorffArndRothMaxLimitTest100()
+        {            
+            int target = 10;
+            int size = 1000;
+            chessboard = new Chessboard(size, size);
+            warnsdorffAR = new WarnsdorffArndRoth(chessboard);
+
+            do
+            {
+                success = 0;
+
+                for (int i = 0; i < target; i++)
+                {
+                    if (warnsdorffAR.SolveKT(0, 0)) success++;
+                }
+
+                if (success < 10) output.WriteLine($"Size: {size} | Success: {success}");
+
+                size += 100;
+                chessboard = new Chessboard(size, size);
+                warnsdorffAR.Chessboard = chessboard;
+
+            } while (size <= 5000);
+
+        }
+
+        [Fact]
+        public void WarnsdorffArndRothMaxLimitTest1()
         {
-            success = 0;
-            warnsdorff = null;
+            int target = 10;
+            int size = 5;
+            chessboard = new Chessboard(size, size);
+            warnsdorffAR = new WarnsdorffArndRoth(chessboard);
+
+            do
+            {
+                success = 0;
+
+                for (int i = 0; i < target; i++)
+                {
+                    if (warnsdorffAR.SolveKT(0, 0)) success++;
+                }
+
+                if (success < 10) output.WriteLine($"Size: {size} | Success: {success}");
+
+                size ++;
+                chessboard = new Chessboard(size, size);
+                warnsdorffAR.Chessboard = chessboard;
+
+            } while (size < 428);
+
         }
     }
 }

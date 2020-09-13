@@ -1,11 +1,11 @@
-﻿using knightsTour.Resources;
+﻿using knightsTour.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
 
-namespace knightsTour.Model
+namespace knightsTour.Resources
 {
     public class MovesService
     {
@@ -101,6 +101,21 @@ namespace knightsTour.Model
             }
 
             return (x, y);
+        }
+
+        public Move SquirrelTieBreaker(IList<Move> tiedMoves, SquirrelMoveOrdering squirrelMoveOrdering)
+        {
+            int indexOfMove;
+            IList<(double, Move)> toSort = new List<(double, Move)>();
+            IList<Move> warnsdorfSquirrelSortedList = new List<Move>();
+
+            foreach (Move move in tiedMoves)
+            {
+                indexOfMove = squirrelMoveOrdering.MovesOreding.IndexOf(move.GetTypeOfMove());
+                toSort.Add((indexOfMove, move));
+            }
+
+            return toSort.OrderBy(i => i.Item1).First().Item2;
         }
 
         public IList<(int, Move)> SortByTheAmountOfPossibleMovesInNextPosition(IList<Move> legalMoves, int[,] board, int knightX, int knightY)
