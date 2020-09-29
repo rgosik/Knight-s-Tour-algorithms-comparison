@@ -1,11 +1,8 @@
 ﻿using knightsTour.Model;
 using knightsTour.Resources;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace knightsTour.KTAlgorithms.Open
+namespace knightsTour
 {
     public class WarnsdorffSquirrel : KTAlgorithm
     {
@@ -26,7 +23,7 @@ namespace knightsTour.KTAlgorithms.Open
         {
             Chessboard clonedChessboard = Chessboard.DeepCopy();
             Steps = 0;
-            Backtracks = 0;
+            squirrelMoveOrdering.ResetIndex();
 
             Timer.Start();
             FoundSolution = SolveKTProblem(clonedChessboard.Board, 1, x, y);

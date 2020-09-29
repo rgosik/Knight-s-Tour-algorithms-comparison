@@ -27,9 +27,9 @@ namespace Tests
         [Fact]
         public void WarnsdorffArndRothSuccessRateTest()
         {
-            int target = 10000;
+            int target = 100;
             int i = 0;
-            chessboard = new Chessboard(428, 428);
+            chessboard = new Chessboard(500, 500);
             warnsdorffAR = new WarnsdorffArndRoth(chessboard, false);
 
             while (i != target)

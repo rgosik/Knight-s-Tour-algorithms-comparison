@@ -7,15 +7,12 @@ namespace knightsTour
     public class Warnsdorff : KTAlgorithm
     {
 
-        public Warnsdorff(Chessboard chessboard, bool output = default) : base(chessboard, output)
-        {
-        }
+        public Warnsdorff(Chessboard chessboard, bool output = default) : base(chessboard, output) { }
 
         public bool SolveKT(int x, int y)
         {
             Chessboard clonedChessboard = Chessboard.DeepCopy();
             Steps = 0;
-            Backtracks = 0;
 
             Timer.Start();
             FoundSolution = SolveKTProblem(clonedChessboard.Board, 1, x, y);

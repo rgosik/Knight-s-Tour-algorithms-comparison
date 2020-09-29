@@ -27,9 +27,10 @@ namespace Tests
         [Fact]
         public void WarnsdorffSuccessRateTest()
         {
-            int target = 10000;
+            var size = 600;
+            int target = 100;
             int i = 0;
-            chessboard = new Chessboard(100, 100);
+            chessboard = new Chessboard(size, size);
             warnsdorff = new Warnsdorff(chessboard, false);
 
             while (i != target)

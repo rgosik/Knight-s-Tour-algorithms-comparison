@@ -6,9 +6,7 @@ namespace knightsTour
     public class Backtracking : KTAlgorithm
     {
 
-        public Backtracking(Chessboard chessboard, bool output = default) : base(chessboard, output)
-        {
-        }
+        public Backtracking(Chessboard chessboard, bool output = default) : base(chessboard, output) { }
 
         public bool SolveKT(int x, int y)
         {

@@ -28,18 +28,19 @@ namespace Tests
         [Fact]
         public void Backtracking5x5At0n0()
         {
+            var target = 1;
             int i = 0;
             chessboard = new Chessboard(8, 8);
             backtracking = new Backtracking(chessboard, false);
             foundSolution = backtracking.SolveKT(0, 0);
 
-            while (i != 10)
+            while (i != target)
             {
                 backtracking.SolveKT(0, 0);
                 i++;
             }
 
-            output.WriteLine($"Steps per solution: {backtracking.Steps}\nAmount of bactracks: {backtracking.Backtracks}\nTime in Milliseconds: {backtracking.Timer.ElapsedMilliseconds}");
+            output.WriteLine($"Steps per solution: {backtracking.Steps}\nAmount of bactracks: {backtracking.Backtracks}\nTime in Milliseconds: {backtracking.Timer.ElapsedMilliseconds / target}");
             foundSolution.Should().BeTrue();
         }
     }

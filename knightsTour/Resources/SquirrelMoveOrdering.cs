@@ -7,17 +7,16 @@ namespace knightsTour.Resources
     public class SquirrelMoveOrdering
     {
         private int index;
-        private int size;
         private int sizeMod8;
         private bool sizeMod16Eq5;
+        private int boardSize;
         private IList<int>[] list = new List<int>[8];
 
-        private int AdjustedSize => size - 1;
         public IList<int> MovesOreding => list[index];
         
         public SquirrelMoveOrdering(int size)
         {
-            this.size = size;
+            boardSize = size - 1;
 
             sizeMod8 = size % 8;
             index = 0;
@@ -87,170 +86,174 @@ namespace knightsTour.Resources
                     break;
             }
         }
+        public void ResetIndex()
+        {
+            index = 0;
+        }
 
         public void CheckAndChangeTheMoveOrdering(int x, int y)
         {
             switch (sizeMod8)
             {
                 case 0:
-                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
+                    if (x == (boardSize - 1) && y == (boardSize - 2) && index == 0)
                     {
                         index =  1; 
                     }
-                    else if (x == 2 && y == 2 && index == 1)
+                    else if (x == 1 && y == 1 && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == AdjustedSize - 8 && y == 1 && index == 2)
+                    else if (x == (boardSize - 8) && y == 0 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 7 && y == AdjustedSize - 3 & index == 3) 
+                    else if (x == 6 && y == (boardSize - 3) && index == 3) 
                     {
                         index = 4;
                     }
                     break;
                 case 1:
-                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
+                    if (x == boardSize - 1 && y == boardSize - 2 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == 2 && y == 2 && index == 1)
+                    else if (x == 1 && y == 1 && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == AdjustedSize - 6 && y == (AdjustedSize + 9) / 2 && index == 2)
+                    else if (x == boardSize - 6 && y == (boardSize + 9) / 2 && index == 2)
                     {
                         index = 3;
                     }
                     break;
                 case 2:
-                    if (x == 6 && y == 1 && index == 0)
+                    if (x == 5 && y == 0 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == 3 && y == 1 && index == 1)
+                    else if (x == 2 && y == 0 && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == AdjustedSize - 15 && y == 4 && index == 2)
+                    else if (x == boardSize - 15 && y == 3 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 10 && y == AdjustedSize - 2 && index == 3)
+                    else if (x == 9 && y == boardSize - 2 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == 5 && y == (AdjustedSize - 6) / 2 && index == 4)
+                    else if (x == 4 && y == (boardSize - 6) / 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 3:
-                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
+                    if (x == boardSize - 1 && y == boardSize - 2 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == AdjustedSize - 6 && y == AdjustedSize && index == 1)
+                    else if (x == boardSize - 6 && y == boardSize && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == 2 && y == 5 && index == 2)
+                    else if (x == 1 && y == 4 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == AdjustedSize - 10 && y == 3 && index == 3)
+                    else if (x == boardSize - 10 && y == 2 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == (AdjustedSize + 1) / 2 && y == AdjustedSize - 2 && index == 4)
+                    else if (x == (boardSize + 1) / 2 && y == boardSize - 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 4:
-                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
+                    if (x == boardSize - 1 && y == boardSize - 2 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == 2 && y == 2 && index == 1)
+                    else if (x == 1 && y == 1 && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == AdjustedSize - 8 && y == 1 && index == 2)
+                    else if (x == boardSize - 8 && y == 0 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 10 && y == AdjustedSize - 5 && index == 3)
+                    else if (x == 9 && y == boardSize - 5 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == 13 && y == (AdjustedSize + 2) / 2 && index == 4)
+                    else if (x == 12 && y == (boardSize + 2) / 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 5:
-                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0 )
+                    if (x == boardSize - 1 && y == boardSize - 2 && index == 0 )
                     {
                         index = 1;
                     }
-                    else if (x == 2 && y == 2 && index == 1)
+                    else if (x == 1 && y == 1 && index == 1)
                     {
                         index = 2;
                     }
                     else if (sizeMod16Eq5)
                     {
-                        if (x == AdjustedSize - 2 && y == (AdjustedSize - 5) / 2 && index == 2)
+                        if (x == boardSize - 2 && y == (boardSize - 5) / 2 && index == 2)
                         {
                             index = 3;
                         }                     
                     }
-                    else if (x == AdjustedSize - 2 && y == (AdjustedSize - 13) /2 && index == 2)
+                    else if (x == boardSize - 2 && y == (boardSize - 13) /2 && index == 2)
                     {
                         index = 3;
                     }
                     break;
                 case 6:
-                    if (x == 6 && y == 1 && index == 0)
+                    if (x == 5 && y == 0 && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == 3 && y == 1 && index == 1)
+                    else if (x == 2 && y == 0 && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == AdjustedSize - 10 && y == 1 && index == 2)
+                    else if (x == boardSize - 10 && y == 0 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == 10 && y == AdjustedSize - 2 && index == 3)
+                    else if (x == 9 && y == boardSize - 2 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == 3 && y == (AdjustedSize + 8) / 2 && index == 4)
+                    else if (x == 2 && y == (boardSize + 8) / 2 && index == 4)
                     {
                         index = 5;
                     }
                     break;
                 case 7:
-                    if (x == AdjustedSize - 1 && y == AdjustedSize - 2 && index == 0)
+                    if (x == (boardSize - 1) && y == (boardSize - 2) && index == 0)
                     {
                         index = 1;
                     }
-                    else if (x == AdjustedSize - 6 && y == AdjustedSize && index == 1)
+                    else if (x == (boardSize - 6) && y == boardSize && index == 1)
                     {
                         index = 2;
                     }
-                    else if (x == 2 && y == 5 && index == 2)
+                    else if (x == 1 && y == 4 && index == 2)
                     {
                         index = 3;
                     }
-                    else if (x == AdjustedSize - 6 && y == 3 && index == 3)
+                    else if (x == (boardSize - 6) && y == 2 && index == 3)
                     {
                         index = 4;
                     }
-                    else if (x == (AdjustedSize + 1) / 2 && y == AdjustedSize - 2 && index == 4)
+                    else if (x == ((boardSize + 1) / 2) && y == (boardSize - 2) && index == 4)
                     {
                         index = 5;
                     }

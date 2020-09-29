@@ -33,40 +33,18 @@ namespace Tests
         [Fact]
         public void BacktrackingWarnsdorffClosed5x5At0n0()
         {
+            var target = 1;
             int i = 0;
-            chessboard = new Chessboard(5, 5);
+            chessboard = new Chessboard(10, 10);
             backtrackingWarnsdorffClosed = new BacktrackingWarnsdorffClosed(chessboard, true);
-            foundSolution = backtrackingWarnsdorffClosed.SolveKT(0, 0);
 
-            while (i != 1)
+            while (i != target)
             {
                 backtrackingWarnsdorffClosed.SolveKT(0, 0);
-
-                if (backtrackingWarnsdorffClosed.Steps < bestSteps || bestSteps == 0)
-                {
-                    bestSteps = backtrackingWarnsdorffClosed.Steps;
-                }
-
                 i++;
             }
 
-            output.WriteLine($"Best Steps: {bestSteps}\nBest Time in Milliseconds: {GetBestTime()}");
-            foundSolution.Should().BeFalse();
-        }
-
-        private long GetBestTime()
-        {
-            List<long> times = new List<long>();
-
-            foreach (Stopwatch stopwatch in backtrackingWarnsdorffClosed.EndPointsStopwatchList)
-            {
-                if(stopwatch.ElapsedMilliseconds != 0)
-                {
-                    times.Add(stopwatch.ElapsedMilliseconds);
-                }
-            }
-
-            return times.Min();
+            output.WriteLine($"Time in Milliseconds: {backtrackingWarnsdorffClosed.Timer.ElapsedMilliseconds / target}");
         }
     }
 }

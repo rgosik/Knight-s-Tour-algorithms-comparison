@@ -28,16 +28,17 @@ namespace Tests
         [Fact]
         public void BacktrackingWarnsdorff5x5At0n0()
         {
+            var target = 3;
             int i = 0;
-            chessboard = new Chessboard(5, 5);
+            chessboard = new Chessboard(8, 8);
             backtrackingWarnsdorff = new BacktrackingWarnsdorff(chessboard, true);
             foundSolution = backtrackingWarnsdorff.SolveKT(0, 0);
 
-            while (i != 1)
-            {
-                backtrackingWarnsdorff.SolveKT(0, 0);
-                i++;
-            }
+            //while (i < target)
+            //{
+            //    backtrackingWarnsdorff.SolveKT(0, 0);
+            //    i++;
+            //}
 
             output.WriteLine($"Steps per solution: {backtrackingWarnsdorff.Steps}\nTime in Milliseconds: {backtrackingWarnsdorff.Timer.ElapsedMilliseconds}");
             foundSolution.Should().BeTrue();

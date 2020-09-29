@@ -1,4 +1,4 @@
-﻿using knightsTour.KTAlgorithms.Open;
+﻿using knightsTour;
 using knightsTour.Model;
 using System;
 using Xunit;
@@ -22,6 +22,7 @@ namespace Tests
         {
             success = 0;
             warnsdorffSQ = null;
+            chessboard = null;
         }
 
         [Fact]
@@ -47,7 +48,25 @@ namespace Tests
                 chessboard = new Chessboard(size, size);
                 warnsdorffSQ.Chessboard = chessboard;
 
-            } while (size <= 300);
+            } while (size <= 100);
         }
+
+        [Fact]
+        public void WarnsdorffSquirrelDefaultTest()
+        {
+            var target = 100;
+            int i = 0;
+            chessboard = new Chessboard(594, 594);
+            warnsdorffSQ = new WarnsdorffSquirrel(chessboard, false);
+
+            while (i != target)
+            {
+                if (warnsdorffSQ.SolveKT(0, 0)) success++;
+                i++;
+            }
+
+            output.WriteLine($"Successes {success}\nTime in Milliseconds: {warnsdorffSQ.Timer.ElapsedMilliseconds / target}");
+        }
+
     }
 }
